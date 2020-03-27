@@ -1,0 +1,144 @@
+<div id="load-bar">
+  <div id="load-bar-inner"></div>
+</div>
+<!-- SYSTEM CARDS -->
+<div id="system-cards">
+  <div id="level">
+    <div>
+      <h5>Level</h5>
+    </div>
+    <div>
+      <h5 id="level-count"></h5>
+    </div>
+  </div>
+  <div id="on-call">
+    <div>
+      <h5>On Call</h5>
+    </div>
+    <div>
+      <h5 id="on-call-count"></h5>
+    </div>
+  </div>
+  <div id="posting">
+    <div>
+      <h5>Posting</h5>
+    </div>
+    <div>
+      <h5 id="posting-count"></h5>
+    </div>
+  </div>
+  <div id="driving">
+    <div>
+      <h5>Driving</h5>
+    </div>
+    <div>
+      <h5 id="driving-count"></h5>
+    </div>
+  </div>
+  <div id="fueling">
+    <div>
+      <h5>Fueling</h5>
+    </div>
+    <div>
+      <h5 id="fueling-count"></h5>
+    </div>
+  </div>
+  <div id="eos">
+    <div>
+      <h5>EOS</h5>
+    </div>
+    <div>
+      <h5 id="eos-count"></h5>
+    </div>
+  </div>
+  <div id="late-call">
+    <div>
+      <h5>Late Call</h5>
+    </div>
+    <div>
+      <h5 id="late-call-count"></h5>
+    </div>
+  </div>
+  <div id="past-eos">
+    <div>
+      <h5>Past EOS</h5>
+    </div>
+    <div>
+      <h5 id="past-eos-count"></h5>
+    </div>
+  </div>
+</div>
+
+<!-- SYSTEM LOG -->
+<div id="system-log">
+  <label>System Log</label>
+  <ul id="system-log-ul"></ul>
+</div>
+
+<!-- WORKLOAD BAR CHART -->
+<div id="workload-bar-chart-container">
+  <canvas id="workload-bar-chart"></canvas>
+</div>
+
+<!-- WORKLOAD TABLE -->
+<div id="workload-tables">
+  <div id="legend">
+    <label style="color: lightblue;">2 Hours (EOS)</label>
+    <label style="color: lightgreen;">1 Hour (EOS)</label>
+    <label style="color: red;">Past EOS</label>
+  </div>
+  <!-- ABOVE MAX -->
+  <h5>Above Max ( <span id="total-above-max"></span> Units )</h5>
+  <table id="above-max">
+    <thead>
+      <th>Unit</th>
+      <th>Workload</th>
+      <th>Threshold</th>
+      <th>Ratio</th>
+      <th>Arrivals</th>
+      <th>Task Time</th>
+      <th>Post Time</th>
+      <th>Drive Time</th>
+      <th>On Call Time</th>
+      <th>Last Post</th>
+      <th>Status</th>
+    </thead>
+    <tbody id="above-max-tbody"></tbody>
+  </table>
+  <!-- ABOVE CURRENT -->
+  <h5>Above Current ( <span id="total-above-current"></span> Units )</h5>
+  <table id="above-current">
+    <thead>
+      <th>Unit</th>
+      <th>Workload</th>
+      <th>Threshold</th>
+      <th>Ratio</th>
+      <th>Arrivals</th>
+      <th>Task Time</th>
+      <th>Post Time</th>
+      <th>Drive Time</th>
+      <th>On Call Time</th>
+      <th>Last Post</th>
+      <th>Status</th>
+    </thead>
+    <tbody id="above-current-tbody"></tbody>
+  </table>
+  <!-- OTHER -->
+  <h5>Other ( <span id="total-other"></span> Units )</h5>
+  <table id="other">
+    <thead>
+      <th>Unit</th>
+      <th>Workload</th>
+      <th>Threshold</th>
+      <th>Ratio</th>
+      <th>Arrivals</th>
+      <th>Task Time</th>
+      <th>Post Time</th>
+      <th>Drive Time</th>
+      <th>On Call Time</th>
+      <th>Last Post</th>
+      <th>Status</th>
+    </thead>
+    <tbody id="other-tbody"></tbody>
+  </table>
+</div>

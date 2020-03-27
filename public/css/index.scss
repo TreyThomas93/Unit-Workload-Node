@@ -1,0 +1,179 @@
+#load-bar {
+  width: 100%;
+  height: 3px;
+
+  & > div {
+    width: 0%;
+    height: 100%;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(1, 1, 1, 0.3);
+  }
+}
+
+#system-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 0.5em;
+  padding: 0.2em;
+
+  h5 {
+    font-size: 0.5rem;
+  }
+
+  & > div {
+    background: var(--primary);
+    text-align: center;
+
+    & > div:nth-child(1) {
+      border-bottom: solid 1px white;
+      padding: 0.5em 0 0 0;
+    }
+
+    & > div:nth-child(2) {
+      padding: 0.5em 0;
+    }
+  }
+}
+
+#system-log {
+  padding: 0.25em;
+  max-width: 620px;
+  margin: 1em 0;
+
+  label,
+  li {
+    font-size: 0.5rem;
+  }
+
+  ul {
+    width: 100%;
+    min-height: 100px;
+    max-height: 100px;
+    background-color: #f7f7f7;
+    border: 2px ridge grey;
+    box-shadow: 0 0 10px rgba(1, 1, 1, 0.3);
+    color: black;
+    list-style: decimal;
+    padding: 0.5em 1em;
+    line-height: 1.5;
+    overflow-y: auto;
+  }
+}
+
+#workload-bar-chart-container {
+  height: 500px;
+  width: 100%;
+  display: none;
+}
+
+#workload-tables {
+  margin-top: 1em;
+  padding: 0.2em;
+
+  #legend {
+    display: flex;
+    justify-content: space-around;
+    padding: 0.5em;
+
+    & > label {
+      font-size: 0.6rem;
+    }
+  }
+
+  h5 {
+    font-size: 0.5rem;
+  }
+
+  table {
+    width: 100%;
+    font-size: 0.4rem;
+    margin-bottom: 2em;
+    background-color: var(--primary);
+    text-align: center;
+    box-shadow: 0 0 10px rgba(1, 1, 1, 0.3);
+
+    th {
+      border-bottom: solid white 1px;
+    }
+
+    td {
+      padding: 0.3em;
+    }
+
+    tr:nth-child(even) {
+      background: var(--background);
+    }
+  }
+
+  #above-max {
+    thead {
+      background-color: red;
+    }
+  }
+
+  #above-current {
+    thead {
+      background-color: yellow;
+      color: black;
+    }
+  }
+}
+
+@media (min-width: 620px) {
+  h5,
+  label {
+    font-size: 0.7rem !important;
+  }
+
+  table {
+    font-size: 0.7rem !important;
+  }
+}
+
+@media (min-width: 860px) {
+  #system-cards {
+    grid-template-columns: repeat(8, 1fr);
+
+    h5 {
+      font-size: 1.1rem !important;
+    }
+  }
+
+  #system-log {
+    li {
+      font-size: 0.7rem !important;
+    }
+  }
+}
+
+@media (min-width: 1200px) {
+  h4,
+  h5,
+  label {
+    font-size: 1.1rem !important;
+  }
+
+  #system-log {
+    ul {
+      padding-left: 2em !important;
+    }
+
+    li {
+      font-size: 0.9rem !important;
+    }
+  }
+
+  #workload-bar-chart-container {
+    display: flex !important;
+  }
+
+  table {
+    font-size: 1rem !important;
+  }
+}
+
+@media (min-width: 1400px) {
+  main {
+    width: 1400px !important;
+  }
+}
