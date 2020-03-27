@@ -27,12 +27,11 @@ class unitWorkload {
   constructor() {
     this.max_threshold = 1;
     this.barChart;
-    this.url = "http://emsa-unitworkload.net"
   }
 
   fetchWorkload() {
     http
-      .get(`${this.url}/live_workload`)
+      .get(`/live_workload`)
       .then(data => {
         this.systemCards(data);
 
@@ -49,7 +48,7 @@ class unitWorkload {
 
   fetchLogs() {
     http
-      .get(`${this.url}/system_logs`)
+      .get(`/system_logs`)
       .then(data => {
         this.systemLog(data);
       })
