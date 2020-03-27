@@ -27,7 +27,7 @@ class unitWorkload {
   constructor() {
     this.max_threshold = 1;
     this.barChart;
-    this.url = "https://emsa-unit-workload.herokuapp.com"
+    this.url = "http://emsa-unitworkload.net"
   }
 
   fetchWorkload() {
