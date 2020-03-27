@@ -27,11 +27,12 @@ class unitWorkload {
   constructor() {
     this.max_threshold = 1;
     this.barChart;
+    this.url = "https://emsa-unit-workload.herokuapp.com"
   }
 
   fetchWorkload() {
     http
-      .get("http://127.0.0.1:5000/live_workload")
+      .get(`${this.url}/live_workload`)
       .then(data => {
         this.systemCards(data);
 
@@ -48,7 +49,7 @@ class unitWorkload {
 
   fetchLogs() {
     http
-      .get("http://127.0.0.1:5000/system_logs")
+      .get(`${this.url}/system_logs`)
       .then(data => {
         this.systemLog(data);
       })
