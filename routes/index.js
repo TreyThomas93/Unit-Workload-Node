@@ -24,7 +24,13 @@ router.get("/live_workload", (req, res) => {
 // @route GET /system_log
 // @desc Fetches System Log Data from MongoDB
 router.get("/system_logs", (req, res) => {
-  systemLogDatabase.find({}, (err, data) => {
+  const today = new Date();
+  const dd = String(today.getDate()).padStart(2, "0");
+  const mm = String(today.getMonth() + 1).padStart(2, "0");
+  const yy = today.getFullYear().toString().substr(-2);
+  const currentDate = mm + "/" + dd + "/" + yy;
+  
+  systemLogDatabase.find({"date" : currentDate}, (err, data) => {
     if (err) throw err;
 
     res.send(JSON.stringify(data));
