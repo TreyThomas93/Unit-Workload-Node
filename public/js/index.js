@@ -29,6 +29,29 @@ class unitWorkload {
     this.barChart;
   }
 
+  timeDifference(time) {
+    let bool;
+
+    let time_start = new Date();
+    let time_end = new Date();
+
+    const value_start = time.split(":");
+    const value_end = new Date().toLocaleTimeString().split(":");
+
+    time_start.setHours(value_start[0], value_start[1], 0);
+    time_end.setHours(value_end[0], value_end[1], 0);
+
+    let diff = (time_end - time_start) / 1000;
+
+    if (diff >= 120) {
+      bool = true;
+    } else {
+      bool = false;
+    }
+
+    return bool;
+  }
+
   fetchWorkload() {
     http
       .get(`/live_workload`)
@@ -41,7 +64,20 @@ class unitWorkload {
 
         const updatedAt = data[0].updated_at;
 
-        document.querySelector("#updated-at").textContent = updatedAt;
+        const bool = this.timeDifference(updatedAt);
+
+        let fontColor;
+
+        if (bool) {
+          fontColor = "red";
+        } else {
+          fontColor = "yellow";
+        }
+
+        let updateAtElement = document.querySelector("#updated-at");
+
+        updateAtElement.style.color = fontColor;
+        updateAtElement.textContent = updatedAt;
       })
       .catch(err => console.log(err));
   }
