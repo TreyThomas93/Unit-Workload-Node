@@ -382,7 +382,7 @@ class unitWorkload {
     this.barChart.data.datasets[0].data = [];
     this.barChart.data.datasets[1].data = [];
     this.barChart.data.datasets[2].data = [];
-    this.barChart.data.datasets[2].backgroundColor = [];
+    this.barChart.data.datasets[0].backgroundColor = [];
     this.barChart.data.datasets[1].backgroundColor = [];
     this.barChart.update();
     //
