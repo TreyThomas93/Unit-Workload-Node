@@ -89,6 +89,8 @@ class unitWorkload {
 
     let level = posting + driving + sos;
 
+    onCall = onCall + lateCall;
+
     document.querySelector("#level-count").textContent = level;
     document.querySelector("#on-call-count").textContent = onCall;
     document.querySelector("#posting-count").textContent = posting;
