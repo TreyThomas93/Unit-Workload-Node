@@ -64,7 +64,7 @@
   overflow-y: auto;
 }
 
-#workload-bar-chart-container {
+#workload-bar-chart-container, #line-chart-container {
   height: 500px;
   width: 100%;
   display: none;
@@ -158,7 +158,7 @@
   #system-log li {
     font-size: 0.9rem !important;
   }
-  #workload-bar-chart-container {
+  #workload-bar-chart-container, #line-chart-container {
     display: -webkit-box !important;
     display: -ms-flexbox !important;
     display: flex !important;

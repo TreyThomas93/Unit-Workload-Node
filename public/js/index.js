@@ -3,10 +3,11 @@ import { http } from "./http.js";
 document.addEventListener("DOMContentLoaded", e => {
   const workload = new unitWorkload();
 
-  workload.fetchWorkload();
+  // workload.fetchWorkload();
   workload.fetchLogs();
 
-  workload.createChart();
+  workload.createWorkloadChart();
+  workload.createLineChart();
 
   const resetNum = 600;
   let num = 0;
@@ -17,7 +18,7 @@ document.addEventListener("DOMContentLoaded", e => {
       100}%`;
     if (num === resetNum) {
       num = 0;
-      workload.fetchWorkload();
+      // workload.fetchWorkload();
       workload.fetchLogs();
     }
   }, 100);
@@ -27,6 +28,7 @@ class unitWorkload {
   constructor() {
     this.max_threshold = 1;
     this.barChart;
+    this.lineChart;
   }
 
   timeDifference(time) {
@@ -87,6 +89,8 @@ class unitWorkload {
       .get(`/system_logs`)
       .then(data => {
         this.systemLog(data);
+
+        this.workloadLineChart(data);
       })
       .catch(err => console.log(err));
   }
@@ -298,7 +302,7 @@ class unitWorkload {
     document.querySelector("#total-other").textContent = total_other;
   }
 
-  createChart() {
+  createWorkloadChart() {
     const ctx = document.querySelector("#workload-bar-chart").getContext("2d");
 
     // Chart Data Display
@@ -465,5 +469,166 @@ class unitWorkload {
       this.barChart.data.datasets[2].data.push(1);
       this.barChart.update();
     });
+  }
+
+  createLineChart() {
+    const ctx = document.querySelector("#line-chart").getContext("2d");
+
+    // Chart Data Display
+    let chartData = {
+      labels: [],
+      datasets: [
+        {
+          fill: false,
+          borderColor: "blue",
+          backgroundColor: "blue",
+          showLine: false,
+          data: [
+            18.9375,
+            18.9375,
+            18.875,
+            18.875,
+            18.8125,
+            18.8125,
+            18.8125,
+            18.8125,
+            18.8125,
+            18.875,
+            18.875,
+            18.9375,
+            18.9375,
+            19,
+            19.0625,
+            19.0625,
+            19.125,
+            19.1875,
+            19.1875,
+            19.25,
+            19.25,
+            19.3125,
+            19.375,
+            19.375,
+            19.4375,
+            19.4375,
+            19.5,
+            19.5,
+            19.5625,
+            19.5625,
+            19.5625,
+            19.625,
+            19.625,
+            19.6875,
+            19.6875,
+            19.6875,
+            19.75,
+            19.75,
+            19.8125,
+            19.8125,
+            19.8125,
+            19.8125,
+            19.875,
+            19.875,
+            19.875,
+            19.9375,
+            19.9375,
+            20,
+            20,
+            20,
+            20,
+            20.0625,
+            20.0625,
+            20.125,
+            20.125,
+            20.0625,
+            20.125,
+            20.125,
+            20.1875,
+            20.1875,
+            20.1875,
+            20.1875,
+            20.25,
+            20.25,
+            20.3125,
+            20.375,
+            20.4375,
+            20.5,
+            20.5625,
+            20.625,
+            20.6875,
+            20.75,
+            20.875,
+            20.9375,
+            21,
+            21.0625,
+            21.125,
+            21.1875,
+            21.3125,
+            21.375,
+            21.375,
+            21.4375,
+            21.5,
+            21.5625,
+            21.5625,
+            21.6875,
+            21.6875,
+            21.75,
+            21.75,
+            21.875,
+            21.9375,
+            22,
+            22.0625,
+            22.0625,
+            22.125,
+            22.125,
+            22.1875,
+            22.25,
+            22.3125
+          ]
+        }
+      ]
+    };
+
+    // Chart Data Options
+    let chartOptions = {
+      maintainAspectRatio: false,
+      animation: false,
+      scales: {
+        xAxes: [
+          {
+            ticks: {
+              autoSkip: true,
+              fontSize: 12,
+              fontColor: "white"
+            }
+          }
+        ],
+        yAxes: [
+          {
+            display: true
+          }
+        ]
+      }
+    };
+
+    this.lineChart = new Chart(ctx, {
+      type: "line",
+      data: chartData,
+      options: chartOptions
+    });
+  }
+
+  workloadLineChart(logs) {
+    // Remove Data
+    // this.lineChart.data.labels = [];
+    this.lineChart.update();
+
+    const dailyHours = 25;
+
+    for (let i = 0; i < dailyHours; i++) {
+      this.lineChart.data.labels.push(`${i}:00`);
+      this.lineChart.update();
+    }
+    // Update Chart with new data
+    // this.lineChart.data.datasets[0].data.push([]);
   }
 }

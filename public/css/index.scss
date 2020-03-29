@@ -60,7 +60,7 @@
   }
 }
 
-#workload-bar-chart-container {
+#workload-bar-chart-container, #line-chart-container {
   height: 500px;
   width: 100%;
   display: none;
@@ -163,7 +163,7 @@
     }
   }
 
-  #workload-bar-chart-container {
+  #workload-bar-chart-container, #line-chart-container {
     display: flex !important;
   }
 
