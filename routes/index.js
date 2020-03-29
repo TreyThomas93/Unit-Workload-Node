@@ -14,7 +14,6 @@ router.get("/", (req, res) => {
 // @route GET /live_workload
 // @desc Fetches Live Workload Data from MongoDB
 router.get("/live_workload", (req, res) => {
-  res.header("Cache-Control", "no-cache, no-store, must-revalidate");
 
   liveWorkloadDatabase.find({}, (err, data) => {
     if (err) throw err;
@@ -26,7 +25,6 @@ router.get("/live_workload", (req, res) => {
 // @route GET /system_log
 // @desc Fetches System Log Data from MongoDB
 router.get("/system_logs", (req, res) => {
-  res.header("Cache-Control", "no-cache, no-store, must-revalidate");
 
   const today = new Date();
   const dd = String(today.getDate()).padStart(2, "0");
