@@ -3,7 +3,7 @@ import { http } from "./http.js";
 document.addEventListener("DOMContentLoaded", e => {
   const workload = new unitWorkload();
 
-  // workload.fetchWorkload();
+  workload.fetchWorkload();
   workload.fetchLogs();
 
   workload.createWorkloadChart();
@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", e => {
       100}%`;
     if (num === resetNum) {
       num = 0;
-      // workload.fetchWorkload();
+      workload.fetchWorkload();
       workload.fetchLogs();
     }
   }, 100);
