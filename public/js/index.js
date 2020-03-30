@@ -57,13 +57,15 @@ class unitWorkload {
     http
       .get(`/live_workload`)
       .then(data => {
-        this.systemCards(data);
+        const { responseData, responseStatus } = data;
 
-        this.workloadTables(data);
+        this.systemCards(responseData);
 
-        this.workloadChart(data);
+        this.workloadTables(responseData);
 
-        const updatedAt = data[0].updated_at;
+        this.workloadChart(responseData);
+
+        const updatedAt = responseData[0].updated_at;
 
         const bool = this.timeDifference(updatedAt);
 
@@ -87,7 +89,11 @@ class unitWorkload {
     http
       .get(`/system_logs`)
       .then(data => {
-        this.systemLog(data);
+        const { responseData, responseStatus } = data;
+
+        if (responseStatus === 200) {
+          this.systemLog(responseData);
+        }
       })
       .catch(err => console.log(err));
   }
@@ -467,5 +473,4 @@ class unitWorkload {
       this.barChart.update();
     });
   }
-
 }

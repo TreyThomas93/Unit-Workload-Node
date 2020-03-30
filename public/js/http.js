@@ -4,8 +4,13 @@ class HTTP {
 
     const responseData = await response.json();
 
-    return responseData;
+    const responseStatus = await response.status;
+
+    return {
+      responseData,
+      responseStatus
+    };
   }
-};
+}
 
 export const http = new HTTP();
