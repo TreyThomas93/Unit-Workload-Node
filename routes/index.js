@@ -38,6 +38,8 @@ router.get("/system", (req, res) => {
   systemDatabase.find({ date: currentDate }, (err, data) => {
     if (err) throw err;
 
+    console.log(data)
+
     res.send(JSON.stringify(data));
   });
 });
