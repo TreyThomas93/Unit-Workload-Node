@@ -466,7 +466,7 @@ class unitWorkload {
     let minutes = (hours - rhours) * 60;
     let rminutes = Math.round(minutes);
     if (rminutes < 10) {
-      rminutes = `0${rminutes}`
+      rminutes = `0${rminutes}`;
     }
     return rhours + ":" + rminutes;
   }
@@ -481,8 +481,9 @@ class unitWorkload {
       data.accumulated_past_eos;
     document.querySelector("#total-late-calls").textContent =
       data.accumulated_late_calls;
-    document.querySelector("#total-time-level-zero").textContent =
-      data.accumulated_level_zero;
+    document.querySelector(
+      "#total-time-level-zero"
+    ).textContent = this.timeConvert(data.accumulated_level_zero);
 
     let output = "";
 
