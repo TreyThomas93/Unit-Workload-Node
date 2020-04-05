@@ -22,14 +22,9 @@ router.get("/live_workload", (req, res) => {
   });
 });
 
-// @route GET /system_log
-// @desc Fetches System Log Data from MongoDB
+// @route GET /system
+// @desc Fetches System Data from MongoDB
 router.get("/system", (req, res) => {
-
-  // Disable caching for content files
-  res.header("Cache-Control", "no-cache, no-store, must-revalidate");
-  res.header("Pragma", "no-cache");
-  res.header("Expires", 0);
 
   const today = new Date();
   const dd = String(today.getDate()).padStart(2, "0");
