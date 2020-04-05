@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", e => {
   const workload = new unitWorkload();
 
   workload.fetchWorkload();
-  workload.fetchLogs();
+  workload.fetchSystem();
 
   workload.createWorkloadChart();
 
@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", e => {
     if (num === resetNum) {
       num = 0;
       workload.fetchWorkload();
-      workload.fetchLogs();
+      workload.fetchSystem();
     }
   }, 100);
 });
@@ -85,14 +85,16 @@ class unitWorkload {
       .catch(err => console.log(err));
   }
 
-  fetchLogs() {
+  fetchSystem() {
     http
-      .get(`/system_logs`)
+      .get(`/system`)
       .then(data => {
         const { responseData, responseStatus } = data;
 
         if (responseStatus === 200) {
-          this.systemLog(responseData);
+          responseData.forEach(data => {
+            this.systemReport(data);
+          });
         }
       })
       .catch(err => console.log(err));
@@ -162,22 +164,6 @@ class unitWorkload {
       document.querySelector("#past-eos").style.backgroundColor =
         "var(--primary)";
     }
-  }
-
-  systemLog(logs) {
-    let logOutput = "";
-
-    logs.forEach(log => {
-      logOutput += `
-        <li>${log.log}</li>
-      `;
-    });
-
-    document.querySelector("#system-log-ul").innerHTML = logOutput;
-
-    // Autoscroll to bottom of ul
-    const element = document.querySelector("#system-log-ul");
-    element.scrollTop = element.scrollHeight - element.clientHeight;
   }
 
   formatTime(int) {
@@ -472,5 +458,40 @@ class unitWorkload {
       this.barChart.data.datasets[2].data.push(1);
       this.barChart.update();
     });
+  }
+
+  timeConvert(num) {
+    let hours = num / 60;
+    let rhours = Math.floor(hours);
+    let minutes = (hours - rhours) * 60;
+    let rminutes = Math.round(minutes);
+    if (rminutes < 10) {
+      rminutes = `0${rminutes}`
+    }
+    return rhours + ":" + rminutes;
+  }
+
+  systemReport(data) {
+    document.querySelector("#total-calls").textContent = data.accumulated_calls;
+    document.querySelector("#total-units").textContent = data.accumulated_units;
+    document.querySelector("#total-post-time").textContent = this.timeConvert(
+      data.accumulated_post_time
+    );
+    document.querySelector("#total-past-eos").textContent =
+      data.accumulated_past_eos;
+    document.querySelector("#total-late-calls").textContent =
+      data.accumulated_late_calls;
+    document.querySelector("#total-time-level-zero").textContent =
+      data.accumulated_level_zero;
+
+    let output = "";
+
+    data.systemLog.forEach(log => {
+      output += `
+      <li>${log}</li>
+      `;
+    });
+
+    document.querySelector("#systemLogs").innerHTML = output;
   }
 }
