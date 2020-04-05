@@ -35,6 +35,8 @@ router.get("/system", (req, res) => {
     .substr(-2);
   const currentDate = mm + "/" + dd + "/" + yy;
 
+  console.log(currentDate)
+
   systemDatabase.find({ date: currentDate }, (err, data) => {
     if (err) throw err;
 
