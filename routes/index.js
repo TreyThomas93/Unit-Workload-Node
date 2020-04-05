@@ -26,6 +26,11 @@ router.get("/live_workload", (req, res) => {
 // @desc Fetches System Log Data from MongoDB
 router.get("/system", (req, res) => {
 
+  // Disable caching for content files
+  res.header("Cache-Control", "no-cache, no-store, must-revalidate");
+  res.header("Pragma", "no-cache");
+  res.header("Expires", 0);
+
   const today = new Date();
   const dd = String(today.getDate()).padStart(2, "0");
   const mm = String(today.getMonth() + 1).padStart(2, "0");
@@ -37,8 +42,6 @@ router.get("/system", (req, res) => {
 
   systemDatabase.find({ date: currentDate }, (err, data) => {
     if (err) throw err;
-
-    console.log(data)
 
     res.send(JSON.stringify(data));
   });
