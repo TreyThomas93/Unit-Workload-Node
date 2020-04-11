@@ -4,7 +4,11 @@ document.addEventListener("DOMContentLoaded", (e) => {
   const workload = new unitWorkload();
 
   workload.fetchWorkload();
+<<<<<<< HEAD
   workload.fetchReport();
+=======
+  workload.fetchSystem();
+>>>>>>> 47f681e79647bb19448d16c5394766307739b92b
 
   workload.createWorkloadChart();
 
@@ -18,7 +22,11 @@ document.addEventListener("DOMContentLoaded", (e) => {
     if (num === resetNum) {
       num = 0;
       workload.fetchWorkload();
+<<<<<<< HEAD
       workload.fetchReport();
+=======
+      workload.fetchSystem();
+>>>>>>> 47f681e79647bb19448d16c5394766307739b92b
     }
   }, 100);
 });
@@ -85,6 +93,7 @@ class unitWorkload {
       .catch((err) => console.log(err));
   }
 
+<<<<<<< HEAD
   fetchReport() {
     http
       .get(`/system_report`)
@@ -93,6 +102,18 @@ class unitWorkload {
 
         if (responseStatus === 200) {
           this.systemReport(responseData);
+=======
+  fetchSystem() {
+    http
+      .get(`/system`)
+      .then(data => {
+        const { responseData, responseStatus } = data;
+
+        if (responseStatus === 200) {
+          responseData.forEach(data => {
+            this.systemReport(data);
+          });
+>>>>>>> 47f681e79647bb19448d16c5394766307739b92b
         }
       })
       .catch((err) => console.log(err));
@@ -164,6 +185,7 @@ class unitWorkload {
     }
   }
 
+<<<<<<< HEAD
   systemReport(report) {
     let logOutput = "";
 
@@ -216,6 +238,8 @@ class unitWorkload {
     ).textContent = accumulated_level_zero;
   }
 
+=======
+>>>>>>> 47f681e79647bb19448d16c5394766307739b92b
   formatTime(int) {
     let hours = Math.floor(int / 60);
     let minutes = int % 60;
@@ -508,5 +532,41 @@ class unitWorkload {
       this.barChart.data.datasets[2].data.push(1);
       this.barChart.update();
     });
+  }
+
+  timeConvert(num) {
+    let hours = num / 60;
+    let rhours = Math.floor(hours);
+    let minutes = (hours - rhours) * 60;
+    let rminutes = Math.round(minutes);
+    if (rminutes < 10) {
+      rminutes = `0${rminutes}`;
+    }
+    return rhours + ":" + rminutes;
+  }
+
+  systemReport(data) {
+    document.querySelector("#total-calls").textContent = data.accumulated_calls;
+    document.querySelector("#total-units").textContent = data.accumulated_units;
+    document.querySelector("#total-post-time").textContent = this.timeConvert(
+      data.accumulated_post_time
+    );
+    document.querySelector("#total-past-eos").textContent =
+      data.accumulated_past_eos;
+    document.querySelector("#total-late-calls").textContent =
+      data.accumulated_late_calls;
+    document.querySelector(
+      "#total-time-level-zero"
+    ).textContent = this.timeConvert(data.accumulated_level_zero);
+
+    let output = "";
+
+    data.systemLog.forEach(log => {
+      output += `
+      <li>${log}</li>
+      `;
+    });
+
+    document.querySelector("#systemLogs").innerHTML = output;
   }
 }

@@ -71,7 +71,7 @@
   }
 }
 
-#workload-bar-chart-container, #line-chart-container {
+#workload-bar-chart-container {
   height: 500px;
   width: 100%;
   display: none;
@@ -130,6 +130,35 @@
   }
 }
 
+#system-report {
+  padding: 0.5em;
+
+  h5 {
+    font-size: 0.7rem;
+    text-decoration: underline;
+  }
+
+  label {
+    font-size: 0.6rem;
+  }
+
+  & > div {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin-top: 1em;
+    grid-gap: 1em;
+    box-shadow: 0 0 10px rgba(1, 1, 1, 0.3);
+    padding: 0.5em;
+  }
+
+  ul {
+    list-style: decimal;
+    padding: 0.5em 1em;
+    font-size: 0.6rem;
+    line-height: 1.5;
+  }
+}
+
 @media (min-width: 620px) {
   h5,
   label {
@@ -164,17 +193,22 @@
     font-size: 1.1rem !important;
   }
 
+<<<<<<< HEAD
   #system-report {
     ul {
       padding-left: 2em !important;
     }
+=======
+  #systemLogs {
+    padding-left: 2em !important;
+>>>>>>> 47f681e79647bb19448d16c5394766307739b92b
 
     li {
       font-size: 0.9rem !important;
     }
   }
 
-  #workload-bar-chart-container, #line-chart-container {
+  #workload-bar-chart-container {
     display: flex !important;
   }
 

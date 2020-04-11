@@ -20,6 +20,11 @@ app.set("view engine", "ejs");
 
 app.use(express.static(__dirname + "/public"));
 
+app.use((req, res, next) => {
+  res.set("Cache-Control", "no-store, no-cache, must-revalidate, private");
+  next();
+});
+
 // Routes
 // index
 app.use("/", require("./routes/index"));

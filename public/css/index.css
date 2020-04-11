@@ -77,7 +77,7 @@
   overflow-y: auto;
 }
 
-#workload-bar-chart-container, #line-chart-container {
+#workload-bar-chart-container {
   height: 500px;
   width: 100%;
   display: none;
@@ -136,6 +136,38 @@
   color: black;
 }
 
+#system-report {
+  padding: 0.5em;
+}
+
+#system-report h5 {
+  font-size: 0.7rem;
+  text-decoration: underline;
+}
+
+#system-report label {
+  font-size: 0.6rem;
+}
+
+#system-report > div {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[2];
+      grid-template-columns: repeat(2, 1fr);
+  margin-top: 1em;
+  grid-gap: 1em;
+  -webkit-box-shadow: 0 0 10px rgba(1, 1, 1, 0.3);
+          box-shadow: 0 0 10px rgba(1, 1, 1, 0.3);
+  padding: 0.5em;
+}
+
+#system-report ul {
+  list-style: decimal;
+  padding: 0.5em 1em;
+  font-size: 0.6rem;
+  line-height: 1.5;
+}
+
 @media (min-width: 620px) {
   h5,
   label {
@@ -165,13 +197,20 @@
   label {
     font-size: 1.1rem !important;
   }
+<<<<<<< HEAD
   #system-report ul {
     padding-left: 2em !important;
   }
   #system-report li {
+=======
+  #systemLogs {
+    padding-left: 2em !important;
+  }
+  #systemLogs li {
+>>>>>>> 47f681e79647bb19448d16c5394766307739b92b
     font-size: 0.9rem !important;
   }
-  #workload-bar-chart-container, #line-chart-container {
+  #workload-bar-chart-container {
     display: -webkit-box !important;
     display: -ms-flexbox !important;
     display: flex !important;
