@@ -38,18 +38,31 @@
   padding: 0.5em 0;
 }
 
-#system-log {
+#system-report {
   padding: 0.25em;
   max-width: 620px;
   margin: 1em 0;
 }
 
-#system-log label,
-#system-log li {
+#system-report h5 {
+  text-decoration: underline;
+}
+
+#system-report #top-system-report {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[2];
+      grid-template-columns: repeat(2, 1fr);
+  grid-gap: 1em;
+  margin: 1em 0;
+}
+
+#system-report label,
+#system-report li {
   font-size: 0.5rem;
 }
 
-#system-log ul {
+#system-report ul {
   width: 100%;
   min-height: 100px;
   max-height: 100px;
@@ -141,7 +154,7 @@
   #system-cards h5 {
     font-size: 1.1rem !important;
   }
-  #system-log li {
+  #system-report li {
     font-size: 0.7rem !important;
   }
 }
@@ -152,10 +165,10 @@
   label {
     font-size: 1.1rem !important;
   }
-  #system-log ul {
+  #system-report ul {
     padding-left: 2em !important;
   }
-  #system-log li {
+  #system-report li {
     font-size: 0.9rem !important;
   }
   #workload-bar-chart-container, #line-chart-container {

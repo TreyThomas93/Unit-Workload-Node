@@ -1,10 +1,10 @@
 import { http } from "./http.js";
 
-document.addEventListener("DOMContentLoaded", e => {
+document.addEventListener("DOMContentLoaded", (e) => {
   const workload = new unitWorkload();
 
   workload.fetchWorkload();
-  workload.fetchLogs();
+  workload.fetchReport();
 
   workload.createWorkloadChart();
 
@@ -12,13 +12,13 @@ document.addEventListener("DOMContentLoaded", e => {
   let num = 0;
   setInterval(() => {
     num++;
-    document.querySelector("#load-bar-inner").style.width = `${(num /
-      resetNum) *
-      100}%`;
+    document.querySelector("#load-bar-inner").style.width = `${
+      (num / resetNum) * 100
+    }%`;
     if (num === resetNum) {
       num = 0;
       workload.fetchWorkload();
-      workload.fetchLogs();
+      workload.fetchReport();
     }
   }, 100);
 });
@@ -56,7 +56,7 @@ class unitWorkload {
   fetchWorkload() {
     http
       .get(`/live_workload`)
-      .then(data => {
+      .then((data) => {
         const { responseData, responseStatus } = data;
 
         this.systemCards(responseData);
@@ -82,20 +82,20 @@ class unitWorkload {
         updateAtElement.style.color = fontColor;
         updateAtElement.textContent = updatedAt;
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   }
 
-  fetchLogs() {
+  fetchReport() {
     http
-      .get(`/system_logs`)
-      .then(data => {
+      .get(`/system_report`)
+      .then((data) => {
         const { responseData, responseStatus } = data;
 
         if (responseStatus === 200) {
-          this.systemLog(responseData);
+          this.systemReport(responseData);
         }
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   }
 
   systemCards(data) {
@@ -108,7 +108,7 @@ class unitWorkload {
     let pastEOS = 0;
     let sos = 0;
 
-    data.forEach(unit => {
+    data.forEach((unit) => {
       let status = unit.status;
 
       if (status === "On Call") {
@@ -164,20 +164,56 @@ class unitWorkload {
     }
   }
 
-  systemLog(logs) {
+  systemReport(report) {
     let logOutput = "";
 
-    logs.forEach(log => {
+    let systemLog = report[0]["systemLog"];
+
+    systemLog.forEach((log) => {
       logOutput += `
-        <li>${log.log}</li>
+        <li>${log}</li>
       `;
     });
 
-    document.querySelector("#system-log-ul").innerHTML = logOutput;
+    if (logOutput === "") {
+      logOutput = "No Events Logged";
+    }
+
+    document.querySelector("#system-log").innerHTML = logOutput;
 
     // Autoscroll to bottom of ul
-    const element = document.querySelector("#system-log-ul");
+    const element = document.querySelector("#system-log");
     element.scrollTop = element.scrollHeight - element.clientHeight;
+
+    let accumulated_calls = report[0]["accumulated_calls"];
+    let accumulated_post_time = report[0]["accumulated_post_time"];
+    let accumulated_units = report[0]["accumulated_units"];
+    let accumulated_drive_time = report[0]["accumulated_drive_time"];
+    let accumulated_on_call_time = report[0]["accumulated_on_call_time"];
+    let accumulated_late_calls = report[0]["accumulated_late_calls"];
+    let accumulated_past_eos = report[0]["accumulated_past_eos"];
+    let accumulated_level_zero = report[0]["accumulated_level_zero"];
+
+    document.querySelector("#total-calls").textContent = accumulated_calls;
+    document.querySelector(
+      "#total-post-time"
+    ).textContent = accumulated_post_time;
+    document.querySelector("#total-units").textContent = accumulated_units;
+    document.querySelector(
+      "#total-drive-time"
+    ).textContent = accumulated_drive_time;
+    document.querySelector(
+      "#total-on-call-time"
+    ).textContent = accumulated_on_call_time;
+    document.querySelector(
+      "#total-late-calls"
+    ).textContent = accumulated_late_calls;
+    document.querySelector(
+      "#total-past-eos"
+    ).textContent = accumulated_past_eos;
+    document.querySelector(
+      "#total-time-level-zero"
+    ).textContent = accumulated_level_zero;
   }
 
   formatTime(int) {
@@ -192,7 +228,7 @@ class unitWorkload {
   }
 
   workloadTables(data) {
-    data.sort(function(a, b) {
+    data.sort(function (a, b) {
       return b.workload - a.workload;
     });
 
@@ -204,7 +240,7 @@ class unitWorkload {
     let total_above_current = 0;
     let total_other = 0;
 
-    data.forEach(unit => {
+    data.forEach((unit) => {
       const unit_number = unit.unit;
       const workload = unit.workload;
       const threshold = unit.threshold;
@@ -315,12 +351,12 @@ class unitWorkload {
         {
           label: "Current Threshold",
           backgroundColor: [],
-          data: []
+          data: [],
         },
         {
           label: "Current UWN",
           backgroundColor: [],
-          data: []
+          data: [],
         },
         {
           label: "Max Threshold(1.0) Beta",
@@ -331,21 +367,21 @@ class unitWorkload {
           radius: 0,
 
           // Changes this dataset to become a line
-          type: "line"
+          type: "line",
         },
         {
           label: "Surpassing Current Threshold",
-          backgroundColor: "yellow"
+          backgroundColor: "yellow",
         },
         {
           label: "Surpassing Max Threshold",
-          backgroundColor: "red"
+          backgroundColor: "red",
         },
         {
           label: "Current Workload",
-          backgroundColor: "#2F607B"
-        }
-      ]
+          backgroundColor: "#2F607B",
+        },
+      ],
     };
 
     // Chart Data Options
@@ -357,19 +393,19 @@ class unitWorkload {
             stacked: true,
             ticks: {
               fontSize: 12,
-              fontColor: "white"
+              fontColor: "white",
             },
             barPercentage: 0.7,
             gridLines: {
-              color: "rgba(255, 255, 255, 0.25)"
+              color: "rgba(255, 255, 255, 0.25)",
             },
             scaleLabel: {
               display: true,
               labelString: "Units",
               fontColor: "white",
-              fontSize: 15
-            }
-          }
+              fontSize: 15,
+            },
+          },
         ],
         yAxes: [
           {
@@ -377,47 +413,47 @@ class unitWorkload {
             ticks: {
               fontSize: 12,
               beginAtZero: true,
-              fontColor: "white"
+              fontColor: "white",
             },
             gridLines: {
-              color: "rgba(255, 255, 255, 0.25)"
+              color: "rgba(255, 255, 255, 0.25)",
             },
             scaleLabel: {
               display: true,
               labelString: "Workload",
               fontColor: "white",
-              fontSize: 15
-            }
-          }
-        ]
+              fontSize: 15,
+            },
+          },
+        ],
       },
       animation: false,
       elements: {
         line: {
-          tension: 0
-        }
+          tension: 0,
+        },
       },
       title: {
         display: true,
         text: "Current Unit Workload",
         fontSize: 15,
-        fontColor: "white"
+        fontColor: "white",
       },
       legend: {
         labels: {
-          filter: function(item, chart) {
+          filter: function (item, chart) {
             // Logic to remove a particular legend item goes here
             return item.text == null || !item.text.includes("Current UWN");
           },
-          fontColor: "white"
-        }
-      }
+          fontColor: "white",
+        },
+      },
     };
 
     this.barChart = new Chart(ctx, {
       type: "bar",
       data: chartData,
-      options: chartOptions
+      options: chartOptions,
     });
   }
 
@@ -437,7 +473,7 @@ class unitWorkload {
       return b.threshold - a.threshold;
     });
 
-    data.forEach(row => {
+    data.forEach((row) => {
       let unit = row.unit;
       let current_threshold = row.threshold;
       let current_workload = row.workload;

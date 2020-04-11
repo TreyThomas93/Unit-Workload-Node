@@ -9,9 +9,9 @@ const app = express();
 require("dotenv").config();
 
 // MongoDB Connection
-const url = `mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@test-cluster1-kppwc.mongodb.net/test?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@unitworkload-kppwc.mongodb.net/test?retryWrites=true&w=majority`;
 
-mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 console.log("Mongo Connected!");
 
 // EJS Middleware

@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const liveWorkloadDatabase = require("../models/liveWorkload");
-const systemLogDatabase = require("../models/systemLog");
+const systemReportDatabase = require("../models/systemReport");
 
 require("dotenv").config();
 
@@ -24,7 +24,7 @@ router.get("/live_workload", (req, res) => {
 
 // @route GET /system_log
 // @desc Fetches System Log Data from MongoDB
-router.get("/system_logs", (req, res) => {
+router.get("/system_report", (req, res) => {
 
   const today = new Date();
   const dd = String(today.getDate()).padStart(2, "0");
@@ -35,7 +35,7 @@ router.get("/system_logs", (req, res) => {
     .substr(-2);
   const currentDate = mm + "/" + dd + "/" + yy;
 
-  systemLogDatabase.find({ date: currentDate }, (err, data) => {
+  systemReportDatabase.find({ date: currentDate }, (err, data) => {
     if (err) throw err;
 
     res.send(JSON.stringify(data));
