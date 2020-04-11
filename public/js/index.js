@@ -185,7 +185,6 @@ class unitWorkload {
     }
   }
 
-<<<<<<< HEAD
   systemReport(report) {
     let logOutput = "";
 
@@ -238,8 +237,6 @@ class unitWorkload {
     ).textContent = accumulated_level_zero;
   }
 
-=======
->>>>>>> 47f681e79647bb19448d16c5394766307739b92b
   formatTime(int) {
     let hours = Math.floor(int / 60);
     let minutes = int % 60;
