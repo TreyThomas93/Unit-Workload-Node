@@ -1,11 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const liveWorkloadDatabase = require("../models/liveWorkload");
-<<<<<<< HEAD
 const systemReportDatabase = require("../models/systemReport");
-=======
-const systemDatabase = require("../models/system");
->>>>>>> 47f681e79647bb19448d16c5394766307739b92b
 
 require("dotenv").config();
 

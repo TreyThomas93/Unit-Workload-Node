@@ -4,11 +4,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
   const workload = new unitWorkload();
 
   workload.fetchWorkload();
-<<<<<<< HEAD
   workload.fetchReport();
-=======
-  workload.fetchSystem();
->>>>>>> 47f681e79647bb19448d16c5394766307739b92b
 
   workload.createWorkloadChart();
 
@@ -22,11 +18,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
     if (num === resetNum) {
       num = 0;
       workload.fetchWorkload();
-<<<<<<< HEAD
       workload.fetchReport();
-=======
-      workload.fetchSystem();
->>>>>>> 47f681e79647bb19448d16c5394766307739b92b
     }
   }, 100);
 });
@@ -93,7 +85,6 @@ class unitWorkload {
       .catch((err) => console.log(err));
   }
 
-<<<<<<< HEAD
   fetchReport() {
     http
       .get(`/system_report`)
@@ -102,18 +93,6 @@ class unitWorkload {
 
         if (responseStatus === 200) {
           this.systemReport(responseData);
-=======
-  fetchSystem() {
-    http
-      .get(`/system`)
-      .then(data => {
-        const { responseData, responseStatus } = data;
-
-        if (responseStatus === 200) {
-          responseData.forEach(data => {
-            this.systemReport(data);
-          });
->>>>>>> 47f681e79647bb19448d16c5394766307739b92b
         }
       })
       .catch((err) => console.log(err));
