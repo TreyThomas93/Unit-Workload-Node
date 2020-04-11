@@ -26,15 +26,9 @@ router.get("/live_workload", (req, res) => {
   });
 });
 
-<<<<<<< HEAD
 // @route GET /system_log
 // @desc Fetches System Log Data from MongoDB
 router.get("/system_report", (req, res) => {
-=======
-// @route GET /system
-// @desc Fetches System Data from MongoDB
-router.get("/system", (req, res) => {
->>>>>>> 47f681e79647bb19448d16c5394766307739b92b
 
   const today = new Date();
   const dd = String(today.getDate()).padStart(2, "0");
@@ -45,11 +39,7 @@ router.get("/system", (req, res) => {
     .substr(-2);
   const currentDate = mm + "/" + dd + "/" + yy;
 
-<<<<<<< HEAD
   systemReportDatabase.find({ date: currentDate }, (err, data) => {
-=======
-  systemDatabase.find({ date: currentDate }, (err, data) => {
->>>>>>> 47f681e79647bb19448d16c5394766307739b92b
     if (err) throw err;
     
     res.send(JSON.stringify(data));
