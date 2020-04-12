@@ -2,7 +2,7 @@
   <div id="load-bar-inner"></div>
 </div>
 <!-- SYSTEM CARDS -->
-<div id="system-cards">
+<div id="system-cards" class="container">
   <div id="level">
     <div>
       <h5>Level</h5>
@@ -70,13 +70,13 @@
 </div>
 
 <!-- WORKLOAD BAR CHART -->
-<div id="workload-bar-chart-container">
+<div id="workload-bar-chart-container" class="container">
   <canvas id="workload-bar-chart"></canvas>
 </div>
 
 <!-- WORKLOAD TABLE -->
-<div id="workload-tables">
-  <div id="legend">
+<div id="workload-tables" class="container">
+  <div id="legend" class="container">
     <label style="color: lightblue;">2 Hours (EOS)</label>
     <label style="color: lightgreen;">1 Hour (EOS)</label>
     <label style="color: red;">Past EOS</label>
@@ -138,7 +138,7 @@
 </div>
 
 <!-- SYSTEM REPORT -->
-<div id="system-report">
+<div id="system-report" class="container">
   <h5>System Report</h5>
   <div id="top-system-report">
     <label>Total Calls: <span id="total-calls"></span></label>
@@ -148,10 +148,11 @@
     <label>Total On Call Time: <span id="total-on-call-time"></span></label>
     <label>Total Late Calls: <span id="total-late-calls"></span></label>
     <label>Total Past EOS: <span id="total-past-eos"></span></label>
-    <label>Total Time Level Zero: <span id="total-time-level-zero"></span></label>
+    <label
+      >Total Time Level Zero: <span id="total-time-level-zero"></span
+    ></label>
   </div>
   <div>
     <ul id="system-log"></ul>
   </div>
 </div>
-

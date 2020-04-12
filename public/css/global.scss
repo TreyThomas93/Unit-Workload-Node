@@ -26,6 +26,45 @@ html {
   font-family: sans-serif;
   background-color: var(--background);
   color: white;
+  overflow-x: hidden;
+}
+
+h1 {
+  font-size: 0.8rem;
+}
+
+label {
+  font-size: 0.7rem;
+}
+
+h5 {
+  font-size: 0.7rem;
+}
+
+.container {
+  padding: 0.5em;
+}
+
+table {
+  width: 100%;
+  font-size: 0.4rem;
+  margin-bottom: 0.5em;
+  text-align: center;
+  line-height: 1.5;
+
+  tr:nth-child(odd) {
+    background-color: var(--primary);
+  }
+}
+
+ul {
+  line-height: 1.5;
+  padding-left: 1em;
+  list-style: decimal;
+}
+
+li {
+  font-size: 0.6rem;
 }
 
 header {
@@ -46,10 +85,65 @@ header {
 main {
   width: 100%;
   margin: auto;
+  max-width: 1400px;
 }
 
 footer {
   font-size: 0.6rem;
   text-align: center;
   padding: 1em;
+}
+
+@media (min-width: 680px) {
+  h1 {
+    font-size: 0.9rem;
+  }
+  
+  label {
+    font-size: 0.9rem;
+  }
+  
+  h5 {
+    font-size: 0.9rem;
+  }
+  
+  table {
+    font-size: 0.6rem;
+  }
+  
+  li {
+    font-size: 0.8rem;
+  }
+}
+
+@media (min-width: 1080px) {
+
+  #workload-bar-chart-container {
+    display: grid !important;
+    height: 500px;
+  }
+
+  #system-cards {
+    grid-template-columns: repeat(8, 1fr) !important;
+  }
+
+  h1 {
+    font-size: 1rem;
+  }
+  
+  label {
+    font-size: 1rem;
+  }
+  
+  h5 {
+    font-size: 1rem;
+  }
+  
+  table {
+    font-size: 0.7rem;
+  }
+  
+  li {
+    font-size: 0.9rem;
+  }
 }

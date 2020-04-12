@@ -164,58 +164,6 @@ class unitWorkload {
     }
   }
 
-  systemReport(report) {
-    let logOutput = "";
-
-    let systemLog = report[0]["systemLog"];
-
-    systemLog.forEach((log) => {
-      logOutput += `
-        <li>${log}</li>
-      `;
-    });
-
-    if (logOutput === "") {
-      logOutput = "No Events Logged";
-    }
-
-    document.querySelector("#system-log").innerHTML = logOutput;
-
-    // Autoscroll to bottom of ul
-    const element = document.querySelector("#system-log");
-    element.scrollTop = element.scrollHeight - element.clientHeight;
-
-    let accumulated_calls = report[0]["accumulated_calls"];
-    let accumulated_post_time = report[0]["accumulated_post_time"];
-    let accumulated_units = report[0]["accumulated_units"];
-    let accumulated_drive_time = report[0]["accumulated_drive_time"];
-    let accumulated_on_call_time = report[0]["accumulated_on_call_time"];
-    let accumulated_late_calls = report[0]["accumulated_late_calls"];
-    let accumulated_past_eos = report[0]["accumulated_past_eos"];
-    let accumulated_level_zero = report[0]["accumulated_level_zero"];
-
-    document.querySelector("#total-calls").textContent = accumulated_calls;
-    document.querySelector(
-      "#total-post-time"
-    ).textContent = accumulated_post_time;
-    document.querySelector("#total-units").textContent = accumulated_units;
-    document.querySelector(
-      "#total-drive-time"
-    ).textContent = accumulated_drive_time;
-    document.querySelector(
-      "#total-on-call-time"
-    ).textContent = accumulated_on_call_time;
-    document.querySelector(
-      "#total-late-calls"
-    ).textContent = accumulated_late_calls;
-    document.querySelector(
-      "#total-past-eos"
-    ).textContent = accumulated_past_eos;
-    document.querySelector(
-      "#total-time-level-zero"
-    ).textContent = accumulated_level_zero;
-  }
-
   formatTime(int) {
     let hours = Math.floor(int / 60);
     let minutes = int % 60;
@@ -521,28 +469,56 @@ class unitWorkload {
     return rhours + ":" + rminutes;
   }
 
-  systemReport(data) {
-    document.querySelector("#total-calls").textContent = data.accumulated_calls;
-    document.querySelector("#total-units").textContent = data.accumulated_units;
-    document.querySelector("#total-post-time").textContent = this.timeConvert(
-      data.accumulated_post_time
-    );
-    document.querySelector("#total-past-eos").textContent =
-      data.accumulated_past_eos;
-    document.querySelector("#total-late-calls").textContent =
-      data.accumulated_late_calls;
-    document.querySelector(
-      "#total-time-level-zero"
-    ).textContent = this.timeConvert(data.accumulated_level_zero);
+  systemReport(report) {
+    let logOutput = "";
 
-    let output = "";
+    let systemLog = report[0]["systemLog"];
 
-    data.systemLog.forEach(log => {
-      output += `
-      <li>${log}</li>
+    systemLog.forEach((log) => {
+      logOutput += `
+        <li>${log}</li>
       `;
     });
 
-    document.querySelector("#systemLogs").innerHTML = output;
+    if (logOutput === "") {
+      logOutput = "No Events Logged";
+    }
+
+    document.querySelector("#system-log").innerHTML = logOutput;
+
+    // Autoscroll to bottom of ul
+    const element = document.querySelector("#system-log");
+    element.scrollTop = element.scrollHeight - element.clientHeight;
+
+    let accumulated_calls = report[0]["accumulated_calls"];
+    let accumulated_post_time = report[0]["accumulated_post_time"];
+    let accumulated_units = report[0]["accumulated_units"];
+    let accumulated_drive_time = report[0]["accumulated_drive_time"];
+    let accumulated_on_call_time = report[0]["accumulated_on_call_time"];
+    let accumulated_late_calls = report[0]["accumulated_late_calls"];
+    let accumulated_past_eos = report[0]["accumulated_past_eos"];
+    let accumulated_level_zero = report[0]["accumulated_level_zero"];
+
+    document.querySelector("#total-calls").textContent = accumulated_calls;
+    document.querySelector(
+      "#total-post-time"
+    ).textContent = this.timeConvert(accumulated_post_time);
+    document.querySelector("#total-units").textContent = accumulated_units;
+    document.querySelector(
+      "#total-drive-time"
+    ).textContent = this.timeConvert(accumulated_drive_time);
+    document.querySelector(
+      "#total-on-call-time"
+    ).textContent = this.timeConvert(accumulated_on_call_time);
+    document.querySelector(
+      "#total-late-calls"
+    ).textContent = accumulated_late_calls;
+    document.querySelector(
+      "#total-past-eos"
+    ).textContent = accumulated_past_eos;
+    document.querySelector(
+      "#total-time-level-zero"
+    ).textContent = this.timeConvert(accumulated_level_zero);
   }
+
 }
