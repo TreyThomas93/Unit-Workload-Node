@@ -471,12 +471,12 @@ class unitWorkload {
 
   systemReport(report) {
     let logOutput = "";
-
+  
     let systemLog = report[0]["systemLog"];
 
     systemLog.forEach((log) => {
       logOutput += `
-        <li>${log}</li>
+        <li>${log["log"]} [Driving: ${log["driving"]} - Posting: ${log["posting"]} - Level: ${log["level"]}]</li>
       `;
     });
 
@@ -500,13 +500,13 @@ class unitWorkload {
     let accumulated_level_zero = report[0]["accumulated_level_zero"];
 
     document.querySelector("#total-calls").textContent = accumulated_calls;
-    document.querySelector(
-      "#total-post-time"
-    ).textContent = this.timeConvert(accumulated_post_time);
+    document.querySelector("#total-post-time").textContent = this.timeConvert(
+      accumulated_post_time
+    );
     document.querySelector("#total-units").textContent = accumulated_units;
-    document.querySelector(
-      "#total-drive-time"
-    ).textContent = this.timeConvert(accumulated_drive_time);
+    document.querySelector("#total-drive-time").textContent = this.timeConvert(
+      accumulated_drive_time
+    );
     document.querySelector(
       "#total-on-call-time"
     ).textContent = this.timeConvert(accumulated_on_call_time);
@@ -520,5 +520,6 @@ class unitWorkload {
       "#total-time-level-zero"
     ).textContent = this.timeConvert(accumulated_level_zero);
   }
-
 }
+
+

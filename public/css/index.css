@@ -48,6 +48,10 @@
   color: black;
 }
 
+#system-report {
+  position: relative;
+}
+
 #system-report h5 {
   text-decoration: underline;
 }
@@ -65,5 +69,22 @@
 #system-report ul {
   margin-top: 0.5em;
   border-bottom: solid 1px white;
+}
+
+.snapShot {
+  width: auto;
+  background: var(--primary);
+  color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  -webkit-box-shadow: 0 0 10px rgba(1, 1, 1, 0.5);
+          box-shadow: 0 0 10px rgba(1, 1, 1, 0.5);
+  display: -ms-grid;
+  display: grid;
+  grid-gap: 1em;
+  padding: 1em;
 }
 /*# sourceMappingURL=index.css.map */
