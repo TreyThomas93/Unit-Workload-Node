@@ -193,7 +193,12 @@ class unitWorkload {
       const workload = unit.workload;
       const threshold = unit.threshold;
       const arrivals = unit.arrivals;
-      const task_time = (unit.task_time / arrivals).toFixed();
+      let task_time;
+      if (arrivals !== 0) {
+        task_time = (unit.task_time / arrivals).toFixed();
+      } else {
+        task_time = unit.task_time
+      }
       const post_time = this.formatTime(unit.post_time);
       const drive_time = this.formatTime(unit.drive_time);
       const on_call_time = this.formatTime(unit.on_call_time);
@@ -471,7 +476,7 @@ class unitWorkload {
 
   systemReport(report) {
     let logOutput = "";
-  
+
     let systemLog = report[0]["systemLog"];
 
     systemLog.forEach((log) => {
@@ -521,5 +526,3 @@ class unitWorkload {
     ).textContent = this.timeConvert(accumulated_level_zero);
   }
 }
-
-
