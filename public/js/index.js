@@ -40,7 +40,7 @@ class unitWorkload {
     const value_end = new Date().toLocaleTimeString().split(":");
 
     time_start.setHours(value_start[0], value_start[1], 0);
-    time_end.setHours(value_end[0], value_end[1], 0);
+    time_end.setHours(parseInt(value_end[0]) + 12, value_end[1], 0);
 
     let diff = (time_end - time_start) / 1000;
 
@@ -59,12 +59,6 @@ class unitWorkload {
       .then((data) => {
         const { responseData, responseStatus } = data;
 
-        this.systemCards(responseData);
-
-        this.workloadTables(responseData);
-
-        this.workloadChart(responseData);
-
         const updatedAt = responseData[0].updated_at;
 
         const bool = this.timeDifference(updatedAt);
@@ -73,8 +67,15 @@ class unitWorkload {
 
         if (bool) {
           fontColor = "red";
+          alert("SYSTEM IS DOWN")
         } else {
           fontColor = "yellow";
+
+          this.systemCards(responseData);
+
+          this.workloadTables(responseData);
+
+          this.workloadChart(responseData);
         }
 
         let updateAtElement = document.querySelector("#updated-at");
@@ -476,10 +477,10 @@ class unitWorkload {
 
   systemReport(report) {
     if (report[0]["valid"] === true) {
-      document.querySelector("#top-system-report").style.display = "grid"
+      document.querySelector("#top-system-report").style.display = "grid";
 
-      document.querySelector("#status").style.color = "yellow"
-      document.querySelector("#status").textContent = "Valid"
+      document.querySelector("#status").style.color = "yellow";
+      document.querySelector("#status").textContent = "Valid";
 
       let logOutput = "";
 
@@ -531,10 +532,10 @@ class unitWorkload {
         "#total-time-level-zero"
       ).textContent = this.timeConvert(accumulated_level_zero);
     } else {
-      document.querySelector("#top-system-report").style.display = "none"
+      document.querySelector("#top-system-report").style.display = "none";
 
-      document.querySelector("#status").style.color = "red"
-      document.querySelector("#status").textContent = "Invalid"
+      document.querySelector("#status").style.color = "red";
+      document.querySelector("#status").textContent = "Invalid";
     }
   }
 }
