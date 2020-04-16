@@ -478,6 +478,9 @@ class unitWorkload {
     if (report[0]["valid"] === true) {
       document.querySelector("#top-system-report").style.display = "grid"
 
+      document.querySelector("#status").style.color = "yellow"
+      document.querySelector("#status").textContent = "Valid"
+
       let logOutput = "";
 
       let systemLog = report[0]["systemLog"];
@@ -530,7 +533,8 @@ class unitWorkload {
     } else {
       document.querySelector("#top-system-report").style.display = "none"
 
-      document.querySelector("#system-log").innerHTML = "System data is invalid."
+      document.querySelector("#status").style.color = "red"
+      document.querySelector("#status").textContent = "Invalid"
     }
   }
 }
