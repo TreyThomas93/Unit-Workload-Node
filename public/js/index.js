@@ -67,7 +67,7 @@ class unitWorkload {
 
         if (bool) {
           fontColor = "red";
-          alert("SYSTEM IS DOWN")
+          alert("SYSTEM IS DOWN");
         } else {
           fontColor = "yellow";
 
@@ -76,6 +76,8 @@ class unitWorkload {
           this.workloadTables(responseData);
 
           this.workloadChart(responseData);
+
+          this.crewList(responseData);
         }
 
         let updateAtElement = document.querySelector("#updated-at");
@@ -462,6 +464,33 @@ class unitWorkload {
       this.barChart.data.datasets[2].data.push(1);
       this.barChart.update();
     });
+  }
+
+  crewList(data) {
+    let crews = "";
+    let total = 0;
+
+    data.sort(function(a, b){return a["unit"] - b["unit"]})
+
+    data.forEach((crew) => {
+      let unit = crew["unit"]
+      let crewOne = crew["crew_member_one"];
+      let crewTwo = crew["crew_member_two"];
+      total += 1;
+
+      crews += `
+
+        <tr>
+          <td>${unit}</td>
+          <td>${crewOne}</td>
+          <td>${crewTwo}</td>
+        </tr>
+
+      `;
+    });
+
+    document.querySelector("#crew-list-tbody").innerHTML = crews;
+    document.querySelector("#total-crews").textContent = total;
   }
 
   timeConvert(num) {
