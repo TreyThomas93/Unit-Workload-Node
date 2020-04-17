@@ -40,7 +40,7 @@ class unitWorkload {
     const value_end = new Date().toLocaleTimeString().split(":");
 
     time_start.setHours(value_start[0], value_start[1], 0);
-    time_end.setHours(parseInt(value_end[0]) + 12, value_end[1], 0);
+    time_end.setHours(value_end[0], value_end[1], 0);
 
     let diff = (time_end - time_start) / 1000;
 
