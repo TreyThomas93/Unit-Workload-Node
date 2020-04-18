@@ -33,11 +33,23 @@ class unitWorkload {
   timeDifference(time) {
     let bool;
 
+    const [newTime, modifier] = new Date().toLocaleTimeString().split(" ");
+
+    let [hours, minutes] = newTime.split(":");
+
+    if (hours === "12") {
+      hours = "00";
+    }
+
+    if (modifier === "PM") {
+      hours = parseInt(hours, 10) + 12;
+    }
+
     let time_start = new Date();
     let time_end = new Date();
 
     const value_start = time.split(":");
-    const value_end = new Date().toLocaleTimeString().split(":");
+    const value_end = `${hours}:${minutes}`.split(":")
 
     time_start.setHours(value_start[0], value_start[1], 0);
     time_end.setHours(value_end[0], value_end[1], 0);
@@ -470,10 +482,12 @@ class unitWorkload {
     let crews = "";
     let total = 0;
 
-    data.sort(function(a, b){return a["unit"] - b["unit"]})
+    data.sort(function (a, b) {
+      return a["unit"] - b["unit"];
+    });
 
     data.forEach((crew) => {
-      let unit = crew["unit"]
+      let unit = crew["unit"];
       let crewOne = crew["crew_member_one"];
       let crewTwo = crew["crew_member_two"];
       total += 1;
