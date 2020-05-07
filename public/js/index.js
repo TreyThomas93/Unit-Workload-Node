@@ -554,26 +554,35 @@ class unitWorkload {
       let accumulated_past_eos = report[0]["accumulated_past_eos"];
       let accumulated_level_zero = report[0]["accumulated_level_zero"];
 
-      document.querySelector("#total-calls").textContent = accumulated_calls;
+      let call_status = report[0]["call_status"]
+      let on_call_status = report[0]["on_call_status"]
+      let post_time_status = report[0]["post_time_status"]
+      let drive_time_status = report[0]["drive_time_status"]
+      let unit_status = report[0]["unit_status"]
+      let past_eos_status = report[0]["past_eos_status"]
+      let late_call_status = report[0]["late_call_status"]
+      let level_zero_status = report[0]["level_zero_status"]
+
+      document.querySelector("#total-calls").textContent = accumulated_calls + " - " + call_status;
       document.querySelector("#total-post-time").textContent = this.timeConvert(
         accumulated_post_time
-      );
-      document.querySelector("#total-units").textContent = accumulated_units;
+      ) + " - " + post_time_status;
+      document.querySelector("#total-units").textContent = accumulated_units + " - " + unit_status;
       document.querySelector(
         "#total-drive-time"
-      ).textContent = this.timeConvert(accumulated_drive_time);
+      ).textContent = this.timeConvert(accumulated_drive_time) + " - " + drive_time_status;
       document.querySelector(
         "#total-on-call-time"
-      ).textContent = this.timeConvert(accumulated_on_call_time);
+      ).textContent = this.timeConvert(accumulated_on_call_time) + " - " + on_call_status;
       document.querySelector(
         "#total-late-calls"
-      ).textContent = accumulated_late_calls;
+      ).textContent = accumulated_late_calls + " - " + late_call_status;
       document.querySelector(
         "#total-past-eos"
-      ).textContent = accumulated_past_eos;
+      ).textContent = accumulated_past_eos + " - " + past_eos_status;
       document.querySelector(
         "#total-time-level-zero"
-      ).textContent = this.timeConvert(accumulated_level_zero);
+      ).textContent = this.timeConvert(accumulated_level_zero) + " - " + level_zero_status;
     } else {
       document.querySelector("#top-system-report").style.display = "none";
 
