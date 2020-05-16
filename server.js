@@ -4,7 +4,8 @@ const flash = require("connect-flash");
 const session = require("express-session");
 const mongoose = require("mongoose");
 const passport = require("passport");
-const bodyParser = require("body-parser")
+const bodyParser = require("body-parser");
+const sslRedirect = require("heroku-ssl-redirect");
 
 const app = express();
 
@@ -26,7 +27,7 @@ app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 
 // Bodyparser
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 
 // Express Session
@@ -34,7 +35,7 @@ app.use(
   session({
     secret: "secret",
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
   })
 );
 
@@ -50,6 +51,9 @@ app.use((req, res, next) => {
   res.locals.error = req.flash("error");
   next();
 });
+
+// enable ssl redirect
+app.use(sslRedirect());
 
 // Routes
 // index
