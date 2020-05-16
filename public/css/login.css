@@ -1,0 +1,39 @@
+#loginForm {
+  margin: 5em auto;
+  max-width: 400px;
+  padding: 1em;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+#loginForm h5 {
+  font-size: 1.5rem !important;
+}
+
+#loginForm form {
+  display: -ms-grid;
+  display: grid;
+  grid-gap: 1em;
+  margin-top: 1em;
+}
+
+#loginForm form input {
+  font-size: 1.1rem;
+  padding: 0.25em 0.5em;
+}
+
+#message-container {
+  padding: 1em;
+  text-align: center;
+  border-radius: 5px;
+  margin-top: 1em;
+}
+
+#message-container label {
+  font-size: 1.3rem !important;
+}
+
+.error {
+  background: red;
+}
+/*# sourceMappingURL=login.css.map */

@@ -1,20 +1,21 @@
 const express = require("express");
 const router = express.Router();
+const { ensureAuthenticated } = require("../config/auth");
 const liveWorkloadDatabase = require("../models/liveWorkload");
 const systemReportDatabase = require("../models/systemReport");
+const usersDatabase = require("../models/users");
 
 require("dotenv").config();
 
 // @route GET /
 // @desc Renders index page
-router.get("/", (req, res) => {
+router.get("/", ensureAuthenticated, (req, res) => {
   res.render("index");
 });
 
 // @route GET /live_workload
 // @desc Fetches Live Workload Data from MongoDB
-router.get("/live_workload", (req, res) => {
-
+router.get("/live_workload", ensureAuthenticated, (req, res) => {
   liveWorkloadDatabase.find({}, (err, data) => {
     if (err) throw err;
 
@@ -24,22 +25,34 @@ router.get("/live_workload", (req, res) => {
 
 // @route GET /system_log
 // @desc Fetches System Log Data from MongoDB
-router.get("/system_report", (req, res) => {
-
+router.get("/system_report", ensureAuthenticated, (req, res) => {
   const today = new Date();
   const dd = String(today.getDate()).padStart(2, "0");
   const mm = String(today.getMonth() + 1).padStart(2, "0");
-  const yy = today
-    .getFullYear()
-    .toString()
-    .substr(-2);
+  const yy = today.getFullYear().toString().substr(-2);
   const currentDate = mm + "/" + dd + "/" + yy;
 
   systemReportDatabase.find({ date: currentDate }, (err, data) => {
     if (err) throw err;
-    
+
     res.send(JSON.stringify(data));
   });
+});
+
+// @route POST /geolocation
+// @desc Saves user coords
+router.post("/geolocation", ensureAuthenticated, (req, res) => {
+  const { latitude, longitude } = req.body;
+  const id = req.user.id;
+
+  if (latitude != "" && longitude != "") {
+    usersDatabase.findByIdAndUpdate(id, { latitude, longitude }, function (
+      err,
+      result
+    ) {
+      if (err) throw err;
+    });
+  }
 });
 
 module.exports = router;

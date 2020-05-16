@@ -3,10 +3,15 @@ const expressLayouts = require("express-ejs-layouts");
 const flash = require("connect-flash");
 const session = require("express-session");
 const mongoose = require("mongoose");
+const passport = require("passport");
+const bodyParser = require("body-parser")
 
 const app = express();
 
 require("dotenv").config();
+
+// Passport config
+require("./config/passport")(passport);
 
 // MongoDB Connection
 const uri = `mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@unitworkload-kppwc.mongodb.net/test?retryWrites=true&w=majority`;
@@ -20,14 +25,38 @@ app.set("view engine", "ejs");
 
 app.use(express.static(__dirname + "/public"));
 
+// Bodyparser
+app.use(bodyParser.json())
+app.use(express.urlencoded({ extended: false }));
+
+// Express Session
+app.use(
+  session({
+    secret: "secret",
+    resave: true,
+    saveUninitialized: true
+  })
+);
+
+// Passport Middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Connect Flash
+app.use(flash());
+
+// Global Vars
 app.use((req, res, next) => {
-  res.set("Cache-Control", "no-store, no-cache, must-revalidate, private");
+  res.locals.error = req.flash("error");
   next();
 });
 
 // Routes
 // index
 app.use("/", require("./routes/index"));
+
+// login
+app.use("/login", require("./routes/login"));
 
 const PORT = process.env.PORT || 5000;
 
