@@ -8,8 +8,6 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
   workload.createWorkloadChart();
 
-  getLocation();
-
   const resetNum = 600;
   let num = 0;
   setInterval(() => {
@@ -21,10 +19,6 @@ document.addEventListener("DOMContentLoaded", (e) => {
       num = 0;
       workload.fetchWorkload();
       workload.fetchReport();
-    }
-
-    if (num === resetNum / 2) {
-      getLocation();
     }
   }, 100);
 });
@@ -596,24 +590,4 @@ class unitWorkload {
       document.querySelector("#status").textContent = "Invalid";
     }
   }
-}
-
-function getLocation() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(savePosition);
-  } else {
-    alert("Geolocation is not supported by this browser.");
-  }
-}
-
-function savePosition(position) {
-  const latitude = position.coords.latitude;
-  const longitude = position.coords.longitude;
-
-  http
-    .post("/geolocation", { latitude, longitude })
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((err) => console.log(err));
 }

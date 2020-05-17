@@ -39,20 +39,4 @@ router.get("/system_report", ensureAuthenticated, (req, res) => {
   });
 });
 
-// @route POST /geolocation
-// @desc Saves user coords
-router.post("/geolocation", ensureAuthenticated, (req, res) => {
-  const { latitude, longitude } = req.body;
-  const id = req.user.id;
-
-  if (latitude != "" && longitude != "") {
-    usersDatabase.findByIdAndUpdate(id, { latitude, longitude }, function (
-      err,
-      result
-    ) {
-      if (err) throw err;
-    });
-  }
-});
-
 module.exports = router;

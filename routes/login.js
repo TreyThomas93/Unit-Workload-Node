@@ -22,15 +22,15 @@ router.post("/", (req, res, next) => {
   })(req, res, next);
 });
 
-router.get("/generate", (req, res) => {
-  const password = "Burntotheground69";
-  const saltRounds = 10;
-  bcrypt.genSalt(saltRounds, function (err, salt) {
-    bcrypt.hash(password, salt, function (err, hash) {
-      // Store hash in your password DB.
-      console.log(hash);
-    });
-  });
-});
+// router.get("/generate", (req, res) => {
+//   const password = "Burntotheground69";
+//   const saltRounds = 10;
+//   bcrypt.genSalt(saltRounds, function (err, salt) {
+//     bcrypt.hash(password, salt, function (err, hash) {
+//       // Store hash in your password DB.
+//       console.log(hash);
+//     });
+//   });
+// });
 
 module.exports = router;
