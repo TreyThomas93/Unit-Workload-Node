@@ -567,22 +567,71 @@ class unitWorkload {
       let late_call_status = report[0]["late_call_status"];
       let level_zero_status = report[0]["level_zero_status"];
 
+      let call_average = report[0]["call_average"];
+      let on_call_average = report[0]["on_call_average"];
+      let post_time_average = report[0]["post_time_average"];
+      let drive_time_average = report[0]["drive_time_average"];
+      let unit_average = report[0]["unit_average"];
+      let past_eos_average = report[0]["past_eos_average"];
+      let late_call_average = report[0]["late_call_average"];
+      let level_zero_average = report[0]["level_zero_average"];
+
       document.querySelector("#total-calls").textContent =
-        accumulated_calls + " - " + call_status;
+        accumulated_calls +
+        " - " +
+        call_status +
+        " (Average: " +
+        call_average +
+        ")";
       document.querySelector("#total-post-time").textContent =
-        this.timeConvert(accumulated_post_time) + " - " + post_time_status;
+        this.timeConvert(accumulated_post_time) +
+        " - " +
+        post_time_status +
+        " (Average: " +
+        this.timeConvert(post_time_average) +
+        ")";
       document.querySelector("#total-units").textContent =
-        accumulated_units + " - " + unit_status;
+        accumulated_units +
+        " - " +
+        unit_status +
+        " (Average: " +
+        unit_average +
+        ")";
       document.querySelector("#total-drive-time").textContent =
-        this.timeConvert(accumulated_drive_time) + " - " + drive_time_status;
+        this.timeConvert(accumulated_drive_time) +
+        " - " +
+        drive_time_status +
+        " (Average: " +
+        this.timeConvert(drive_time_average) +
+        ")";
       document.querySelector("#total-on-call-time").textContent =
-        this.timeConvert(accumulated_on_call_time) + " - " + on_call_status;
+        this.timeConvert(accumulated_on_call_time) +
+        " - " +
+        on_call_status +
+        " (Average: " +
+        this.timeConvert(on_call_average) +
+        ")";
       document.querySelector("#total-late-calls").textContent =
-        accumulated_late_calls + " - " + late_call_status;
+        accumulated_late_calls +
+        " - " +
+        late_call_status +
+        " (Average: " +
+        late_call_average +
+        ")";
       document.querySelector("#total-past-eos").textContent =
-        accumulated_past_eos + " - " + past_eos_status;
+        accumulated_past_eos +
+        " - " +
+        past_eos_status +
+        " (Average: " +
+        past_eos_average +
+        ")";
       document.querySelector("#total-time-level-zero").textContent =
-        this.timeConvert(accumulated_level_zero) + " - " + level_zero_status;
+        this.timeConvert(accumulated_level_zero) +
+        " - " +
+        level_zero_status +
+        " (Average: " +
+        this.timeConvert(level_zero_average) +
+        ")";
     } else {
       document.querySelector("#top-system-report").style.display = "none";
 
