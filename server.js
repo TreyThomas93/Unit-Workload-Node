@@ -20,6 +20,8 @@ const uri = `mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PAS
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 console.log("Mongo Connected!");
 
+mongoose.set("useFindAndModify", false);
+
 // EJS Middleware
 app.use(expressLayouts);
 app.set("view engine", "ejs");

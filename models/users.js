@@ -10,14 +10,8 @@ const usersSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    unit: {
+    logins: {
       type: Number,
-    },
-    latitude: {
-      type: String,
-    },
-    longitude: {
-      type: String,
     },
   },
   { collection: "Users" }

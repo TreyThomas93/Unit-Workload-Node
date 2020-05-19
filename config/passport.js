@@ -24,6 +24,16 @@ module.exports = (passport) => {
               if (err) throw err;
 
               if (isMatched) {
+                User.findOneAndUpdate(
+                  { username },
+                  { $inc: { logins: 1 } },
+                  { upsert: true },
+                  (err, res) => {
+                    if (err) throw err;
+
+                    console.log(res);
+                  }
+                );
                 return done(null, user);
               } else {
                 return done(null, false, { message: "Password incorrect!" });

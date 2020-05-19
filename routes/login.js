@@ -23,7 +23,7 @@ router.post("/", (req, res, next) => {
 });
 
 // router.get("/generate", (req, res) => {
-//   const password = "password!";
+//   const password = "mlbbnf5384";
 //   const saltRounds = 10;
 //   bcrypt.genSalt(saltRounds, function (err, salt) {
 //     bcrypt.hash(password, salt, function (err, hash) {
