@@ -98,27 +98,28 @@ footer {
   h1 {
     font-size: 0.9rem;
   }
-  
+
   label {
     font-size: 0.9rem;
   }
-  
+
   h5 {
     font-size: 0.9rem;
   }
-  
+
   table {
     font-size: 0.6rem;
   }
-  
+
   li {
     font-size: 0.8rem;
   }
 }
 
 @media (min-width: 1080px) {
-
-  #workload-bar-chart-container {
+  #workload-bar-chart-container,
+  #average-chart-one-container,
+  #average-chart-two-container {
     display: grid !important;
     height: 500px;
   }
@@ -130,19 +131,19 @@ footer {
   h1 {
     font-size: 1rem;
   }
-  
+
   label {
     font-size: 1rem;
   }
-  
+
   h5 {
     font-size: 1rem;
   }
-  
+
   table {
     font-size: 0.7rem;
   }
-  
+
   li {
     font-size: 0.9rem;
   }

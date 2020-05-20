@@ -118,7 +118,9 @@ footer {
 }
 
 @media (min-width: 1080px) {
-  #workload-bar-chart-container {
+  #workload-bar-chart-container,
+  #average-chart-one-container,
+  #average-chart-two-container {
     display: -ms-grid !important;
     display: grid !important;
     height: 500px;

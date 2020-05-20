@@ -1,33 +1,59 @@
 import { http } from "./http.js";
+import { charts } from "./charts.js";
 
 document.addEventListener("DOMContentLoaded", (e) => {
-  const workload = new unitWorkload();
+  const master = new Master();
 
-  workload.fetchWorkload();
-  workload.fetchReport();
+  master.fetchLiveWorkload();
 
-  workload.createWorkloadChart();
-
-  const resetNum = 600;
-  let num = 0;
-  setInterval(() => {
-    num++;
-    document.querySelector("#load-bar-inner").style.width = `${
-      (num / resetNum) * 100
-    }%`;
-    if (num === resetNum) {
-      num = 0;
-      workload.fetchWorkload();
-      workload.fetchReport();
-    }
-  }, 100);
+  master.fetchSystem();
 });
+
+class Master {
+  constructor() {
+    this.charts = charts;
+  }
+
+  // Fetches live workload data
+  fetchLiveWorkload() {
+    http
+      .get(`/live_workload`)
+      .then((data) => {
+        const { responseData, responseStatus } = data;
+
+        this.charts.liveWorkloadData(responseData);
+
+        const updatedAt = responseData[0].updated_at;
+
+        let fontColor;
+
+        fontColor = "yellow";
+
+        let updateAtElement = document.querySelector("#updated-at");
+
+        updateAtElement.style.color = fontColor;
+        updateAtElement.textContent = updatedAt;
+      })
+      .catch((err) => console.log(err));
+  }
+
+  // Fetches system averages data
+  fetchSystem() {
+    http
+      .get(`/system_report`)
+      .then((data) => {
+        const { responseData, responseStatus } = data;
+
+        this.charts.averageBarChartOneData(responseData);
+        this.charts.averageBarChartTwoData(responseData);
+      })
+      .catch((err) => console.log(err));
+  }
+}
 
 class unitWorkload {
   constructor() {
     this.max_threshold = 1;
-    this.barChart;
-    this.lineChart;
   }
 
   timeDifference(time) {
@@ -311,122 +337,6 @@ class unitWorkload {
       "#total-above-current"
     ).textContent = total_above_current;
     document.querySelector("#total-other").textContent = total_other;
-  }
-
-  createWorkloadChart() {
-    const ctx = document.querySelector("#workload-bar-chart").getContext("2d");
-
-    // Chart Data Display
-    let chartData = {
-      labels: [],
-      datasets: [
-        {
-          label: "Current Threshold",
-          backgroundColor: [],
-          data: [],
-        },
-        {
-          label: "Current UWN",
-          backgroundColor: [],
-          data: [],
-        },
-        {
-          label: "Max Threshold(1.0) Beta",
-          fill: false,
-          borderColor: "blue",
-          backgroundColor: "blue",
-          data: [],
-          radius: 0,
-
-          // Changes this dataset to become a line
-          type: "line",
-        },
-        {
-          label: "Surpassing Current Threshold",
-          backgroundColor: "yellow",
-        },
-        {
-          label: "Surpassing Max Threshold",
-          backgroundColor: "red",
-        },
-        {
-          label: "Current Workload",
-          backgroundColor: "#2F607B",
-        },
-      ],
-    };
-
-    // Chart Data Options
-    let chartOptions = {
-      maintainAspectRatio: false,
-      scales: {
-        xAxes: [
-          {
-            stacked: true,
-            ticks: {
-              fontSize: 12,
-              fontColor: "white",
-            },
-            barPercentage: 0.7,
-            gridLines: {
-              color: "rgba(255, 255, 255, 0.25)",
-            },
-            scaleLabel: {
-              display: true,
-              labelString: "Units",
-              fontColor: "white",
-              fontSize: 15,
-            },
-          },
-        ],
-        yAxes: [
-          {
-            stacked: false,
-            ticks: {
-              fontSize: 12,
-              beginAtZero: true,
-              fontColor: "white",
-            },
-            gridLines: {
-              color: "rgba(255, 255, 255, 0.25)",
-            },
-            scaleLabel: {
-              display: true,
-              labelString: "Workload",
-              fontColor: "white",
-              fontSize: 15,
-            },
-          },
-        ],
-      },
-      animation: false,
-      elements: {
-        line: {
-          tension: 0,
-        },
-      },
-      title: {
-        display: true,
-        text: "Current Unit Workload",
-        fontSize: 15,
-        fontColor: "white",
-      },
-      legend: {
-        labels: {
-          filter: function (item, chart) {
-            // Logic to remove a particular legend item goes here
-            return item.text == null || !item.text.includes("Current UWN");
-          },
-          fontColor: "white",
-        },
-      },
-    };
-
-    this.barChart = new Chart(ctx, {
-      type: "bar",
-      data: chartData,
-      options: chartOptions,
-    });
   }
 
   workloadChart(data) {
