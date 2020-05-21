@@ -20,6 +20,7 @@
     "express-ejs-layouts": "^2.5.0",
     "express-session": "^1.17.0",
     "heroku-ssl-redirect": "0.0.4",
+    "moment": "^2.26.0",
     "mongoose": "^5.9.5",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0"

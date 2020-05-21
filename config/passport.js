@@ -1,6 +1,7 @@
 const localStrategy = require("passport-local").Strategy;
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
+const moment = require("moment");
 
 // Load User Model
 const User = require("../models/users");
@@ -24,14 +25,19 @@ module.exports = (passport) => {
               if (err) throw err;
 
               if (isMatched) {
+                let timeStamp = moment().format("MM/DD/YY HH:mm:ss");
+
                 User.findOneAndUpdate(
                   { username },
-                  { $inc: { logins: 1 } },
+                  {
+                    $inc: { logins: 1 },
+                    $push: {
+                      login_dates: timeStamp,
+                    },
+                  },
                   { upsert: true },
                   (err, res) => {
                     if (err) throw err;
-
-                    console.log(res);
                   }
                 );
                 return done(null, user);

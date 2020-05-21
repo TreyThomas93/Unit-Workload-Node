@@ -13,6 +13,9 @@ const usersSchema = new mongoose.Schema(
     logins: {
       type: Number,
     },
+    login_dates: {
+      type: Array,
+    },
   },
   { collection: "Users" }
 );
