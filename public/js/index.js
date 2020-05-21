@@ -8,9 +8,20 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
   master.fetchSystem();
 
+  const resetNum = 600;
+  let num = 0;
   setInterval(() => {
+    num++;
+    document.querySelector("#load-bar-inner").style.width = `${
+      (num / resetNum) * 100
+    }%`;
+    if (num === resetNum) {
+      num = 0;
+      master.fetchLiveWorkload();
 
-  }, 100)
+      master.fetchSystem();
+    }
+  }, 100);
 });
 
 class Master {
@@ -360,5 +371,3 @@ class Master {
     document.querySelector("#total-crews").textContent = total;
   }
 }
-
-

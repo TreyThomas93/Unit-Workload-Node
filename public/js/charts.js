@@ -552,9 +552,6 @@ class Charts {
     let currentCallValue = responseData[0]["accumulated_calls"];
     let currentCallAverage = responseData[0]["call_average"];
 
-    console.log(currentCallValue);
-    console.log(currentCallAverage);
-
     // Remove Data
     this.averageBarChartThree.data.datasets[0].data = [];
     this.averageBarChartThree.data.datasets[1].data = [];
