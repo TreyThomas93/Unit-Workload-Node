@@ -156,32 +156,37 @@
 <!-- SYSTEM REPORT -->
 <div id="system-report" class="container">
   <h5>System Report (<span id="status"></span>)</h5>
-  <div id="top-system-report">
-    <label>Total Calls: <span id="total-calls"></span></label>
-    <label>Total Units: <span id="total-units"></span></label>
-    <label>Total Post Time: <span id="total-post-time"></span></label>
-    <label>Total Drive Time: <span id="total-drive-time"></span></label>
-    <label>Total On Call Time: <span id="total-on-call-time"></span></label>
-    <label>Total Late Calls: <span id="total-late-calls"></span></label>
-    <label>Total Past EOS: <span id="total-past-eos"></span></label>
-    <label
-      >Total Time Level Zero: <span id="total-time-level-zero"></span
-    ></label>
-  </div>
-  <div>
-    <ul id="system-log"></ul>
-  </div>
-</div>
 
-<!-- SYSTEM REPORT GRAPHS -->
-<div id="system-report-graphs">
-  <!-- on call time, post time, drive time -->
-  <div id="average-chart-one-container">
-    <canvas id="average-chart-one"></canvas>
-  </div>
+  <!-- SYSTEM REPORT GRAPHS -->
+  <div id="system-report-graphs">
+    <!-- log -->
+    <div>
+      <ul id="system-log"></ul>
+    </div>
 
-  <!-- late call, past eos, level zero -->
-  <div id="average-chart-two-container">
-    <canvas id="average-chart-two"></canvas>
+    <!-- on call time, post time, drive time -->
+    <div id="average-chart-one-container">
+      <canvas id="average-chart-one"></canvas>
+    </div>
+
+    <!-- late call, past eos, level zero -->
+    <div id="average-chart-two-container">
+      <canvas id="average-chart-two"></canvas>
+    </div>
+
+    <!-- calls -->
+    <div id="average-chart-three-container">
+      <canvas id="average-chart-three"></canvas>
+    </div>
+
+    <!-- units -->
+    <div id="average-chart-four-container">
+      <canvas id="average-chart-four"></canvas>
+    </div>
+
+    <!-- units -->
+    <div id="average-chart-five-container">
+      <canvas id="average-chart-five"></canvas>
+    </div>
   </div>
 </div>

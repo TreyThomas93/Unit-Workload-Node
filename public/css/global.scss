@@ -119,9 +119,18 @@ footer {
 @media (min-width: 1080px) {
   #workload-bar-chart-container,
   #average-chart-one-container,
-  #average-chart-two-container {
+  #average-chart-two-container,
+  #average-chart-three-container,
+  #average-chart-four-container,
+  #average-chart-five-container {
     display: grid !important;
     height: 500px;
+  }
+
+  #system-report-graphs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr) !important;
+    grid-gap: 1em;
   }
 
   #system-cards {

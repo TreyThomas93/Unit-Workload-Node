@@ -1,4 +1,4 @@
-#load-bar{
+#load-bar {
   width: 100%;
   height: 5px;
 
@@ -19,7 +19,7 @@
   text-align: center;
   grid-gap: 0.5em;
 
-  &>div {
+  & > div {
     background: var(--primary);
     padding: 0.5em 0;
 
@@ -56,17 +56,25 @@
     text-decoration: underline;
   }
 
-  #top-system-report {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    margin: 0.5em 0;
-    grid-gap: 0.5em;
-    border-bottom: solid 1px white;
-  }
-
   ul {
     margin-top: 0.5em;
     border-bottom: solid 1px white;
+    max-height: 500px;
+  }
+
+  #average-chart-one-container,
+  #average-chart-two-container,
+  #average-chart-three-container,
+  #average-chart-four-container,
+  #average-chart-five-container {
+    display: grid !important;
+    height: 500px;
+  }
+
+  #system-report-graphs {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: 1em;
   }
 }
 
