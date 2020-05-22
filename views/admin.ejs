@@ -1,0 +1,32 @@
+<div id="admin-container">
+  <!-- DISPLAY USERS -->
+  <div id="display-users">
+    <table>
+      <thead>
+        <th>Name</th>
+        <th>Username</th>
+        <th># Of Logins</th>
+        <th></th>
+        <th></th>
+      </thead>
+      <tbody id="display-users-tbody"></tbody>
+    </table>
+  </div>
+
+  <!-- UPDATE/ADD USERS -->
+  <div id="update-add-users">
+    <h1>Add User</h1>
+    <form action="/admin" method="POST" id="update-add-form">
+      <input type="text" name="name" placeholder="Name" />
+      <input type="text" name="username" placeholder="Username" />
+      <input type="text" name="password" placeholder="Password" />
+      <input
+        type="text"
+        name="confirmPassword"
+        placeholder="Confirm Password"
+      />
+      <input type="submit" value="Save" id="save" />
+    </form>
+    <%- include('partials/message') %>
+  </div>
+</div>

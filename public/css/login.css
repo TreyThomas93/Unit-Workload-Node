@@ -21,19 +21,4 @@
   font-size: 1.1rem;
   padding: 0.25em 0.5em;
 }
-
-#message-container {
-  padding: 1em;
-  text-align: center;
-  border-radius: 5px;
-  margin-top: 1em;
-}
-
-#message-container label {
-  font-size: 1.3rem !important;
-}
-
-.error {
-  background: red;
-}
 /*# sourceMappingURL=login.css.map */

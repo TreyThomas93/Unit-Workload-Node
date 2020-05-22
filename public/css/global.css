@@ -30,6 +30,25 @@ html {
   overflow-x: hidden;
 }
 
+#message-container {
+  padding: 1em;
+  text-align: center;
+  border-radius: 5px;
+  margin-top: 1em;
+}
+
+#message-container label {
+  font-size: 1.3rem !important;
+}
+
+.error {
+  background: red;
+}
+
+.success {
+  background-color: #007ACC;
+}
+
 h1 {
   font-size: 0.8rem;
 }

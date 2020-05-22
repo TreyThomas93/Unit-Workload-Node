@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const passport = require("passport");
 const bodyParser = require("body-parser");
 const sslRedirect = require("heroku-ssl-redirect");
+const methodOverride = require('method-override');
 
 const app = express();
 
@@ -32,6 +33,9 @@ app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 
+// PUT/DELETE
+app.use(methodOverride('_method'));
+
 // Express Session
 app.use(
   session({
@@ -51,6 +55,7 @@ app.use(flash());
 // Global Vars
 app.use((req, res, next) => {
   res.locals.error = req.flash("error");
+  res.locals.success = req.flash("success")
   next();
 });
 
@@ -63,6 +68,9 @@ app.use("/", require("./routes/index"));
 
 // login
 app.use("/login", require("./routes/login"));
+
+// admin
+app.use("/admin", require("./routes/admin"));
 
 const PORT = process.env.PORT || 5000;
 
