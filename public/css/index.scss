@@ -56,10 +56,23 @@
     text-decoration: underline;
   }
 
+  div:nth-child(1) {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 1em;
+
+    h1 {
+      font-size: 4rem;
+    }
+  }
+
   ul {
-    margin-top: 0.5em;
-    border-bottom: solid 1px white;
+    border: solid 1px white;
     max-height: 500px;
+    padding: 1em 2em;
+    overflow-x: auto;
   }
 
   #average-chart-one-container,

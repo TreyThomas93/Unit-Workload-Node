@@ -56,10 +56,30 @@
   text-decoration: underline;
 }
 
+#system-report div:nth-child(1) {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  text-align: center;
+  padding: 1em;
+}
+
+#system-report div:nth-child(1) h1 {
+  font-size: 4rem;
+}
+
 #system-report ul {
-  margin-top: 0.5em;
-  border-bottom: solid 1px white;
+  border: solid 1px white;
   max-height: 500px;
+  padding: 1em 2em;
+  overflow-x: auto;
 }
 
 #system-report #average-chart-one-container,

@@ -126,6 +126,11 @@ class Master {
           const element = document.querySelector("#system-log");
           element.scrollTop = element.scrollHeight - element.clientHeight;
 
+          // Display Weekly Off On Time
+          document.querySelector("#off-on-time").textContent = responseData[0]["weeklyoffontime"]["offontimepercentage"] + "%"
+
+          document.querySelector("#daterange").textContent = responseData[0]["weeklyoffontime"]["daterange"]
+
           this.charts.averageBarChartOneData(responseData);
           this.charts.averageBarChartTwoData(responseData);
           this.charts.averageBarChartThreeData(responseData);
