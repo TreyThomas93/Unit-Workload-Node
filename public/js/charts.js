@@ -504,7 +504,7 @@ class Charts {
               fontSize: 12,
               beginAtZero: true,
               fontColor: "white",
-              max: 250,
+              max: 300,
             },
             gridLines: {
               color: "rgba(255, 255, 255, 0.25)",
@@ -739,7 +739,7 @@ class Charts {
               fontSize: 12,
               beginAtZero: true,
               fontColor: "white",
-              max: 60,
+              max: 120,
             },
             gridLines: {
               color: "rgba(255, 255, 255, 0.25)",
