@@ -6,11 +6,13 @@ class Charts {
     this.averageBarChartThree;
     this.averageBarChartFour;
     this.averageBarChartFive;
+    this.averageLineChartFour;
 
     this.createLiveWorkloadBarChart();
     this.createAverageBarChartOne();
     this.createAverageBarChartTwo();
     this.createAverageBarChartThree();
+    this.createAverageLineChartFour();
     this.createAverageBarChartFour();
     this.createAverageBarChartFive();
   }
@@ -55,6 +57,17 @@ class Charts {
         {
           label: "Current Workload",
           backgroundColor: "#2F607B",
+        },
+        {
+          label: "Shift Average",
+          fill: false,
+          borderColor: "white",
+          backgroundColor: "white",
+          data: [],
+          radius: 0,
+
+          // Changes this dataset to become a line
+          type: "line",
         },
       ],
     };
@@ -138,6 +151,7 @@ class Charts {
     this.liveWorkloadBarChart.data.datasets[0].data = [];
     this.liveWorkloadBarChart.data.datasets[1].data = [];
     this.liveWorkloadBarChart.data.datasets[2].data = [];
+    this.liveWorkloadBarChart.data.datasets[6].data = [];
     this.liveWorkloadBarChart.data.datasets[0].backgroundColor = [];
     this.liveWorkloadBarChart.data.datasets[1].backgroundColor = [];
     this.liveWorkloadBarChart.update();
@@ -152,6 +166,11 @@ class Charts {
       let unit = row.unit;
       let current_threshold = row.threshold;
       let current_workload = row.workload;
+      let shift_average = row.shift_average;
+
+      if (shift_average < 0) {
+        shift_average = 0;
+      }
 
       // Check if item already in chart data
       if (
@@ -191,6 +210,7 @@ class Charts {
       this.liveWorkloadBarChart.data.datasets[0].data.push(current_threshold);
       this.liveWorkloadBarChart.data.datasets[1].data.push(current_workload);
       this.liveWorkloadBarChart.data.datasets[2].data.push(1);
+      this.liveWorkloadBarChart.data.datasets[6].data.push(shift_average);
       this.liveWorkloadBarChart.update();
     });
   }
@@ -571,6 +591,138 @@ class Charts {
     this.averageBarChartThree.update();
   }
 
+  // Units Per Hour Line
+  // Units
+  createAverageLineChartFour() {
+    const ctx = document
+      .querySelector("#average-chart-four-line")
+      .getContext("2d");
+
+    // Chart Data Display
+    let chartData = {
+      labels: [],
+      datasets: [
+        {
+          label: "Average",
+          backgroundColor: [],
+          data: [],
+          fill: false,
+          borderColor: "white",
+          pointRadius: 0,
+          borderDash: [15, 10],
+          borderWidth: 2
+        },
+        {
+          label: "Today",
+          backgroundColor: [],
+          data: [],
+          fill: false,
+          borderColor: "blue",
+          pointRadius: 0,
+          borderWidth: 2
+        },
+      ],
+    };
+
+    // Chart Data Options
+    let chartOptions = {
+      maintainAspectRatio: false,
+      scales: {
+        xAxes: [
+          {
+            stacked: false,
+            ticks: {
+              fontSize: 12,
+              fontColor: "white",
+            },
+            barPercentage: 0.7,
+            gridLines: {
+              color: "rgba(255, 255, 255, 0.25)",
+            },
+            scaleLabel: {
+              display: false,
+              labelString: "Categories",
+              fontColor: "white",
+              fontSize: 15,
+            },
+          },
+        ],
+        yAxes: [
+          {
+            stacked: false,
+            ticks: {
+              fontSize: 12,
+              beginAtZero: true,
+              fontColor: "white",
+              // max: 60,
+            },
+            gridLines: {
+              color: "rgba(255, 255, 255, 0.25)",
+            },
+            scaleLabel: {
+              display: true,
+              labelString: "Units",
+              fontColor: "white",
+              fontSize: 15,
+            },
+          },
+        ],
+      },
+      animation: false,
+      elements: {
+        line: {
+          tension: 0,
+        },
+      },
+      title: {
+        display: true,
+        text: "Units",
+        fontSize: 15,
+        fontColor: "white",
+      },
+      legend: {
+        labels: {
+          //   filter: function (item, chart) {
+          //     // Logic to remove a particular legend item goes here
+          //     return item.text == null || !item.text.includes("Current Value");
+          //   },
+          fontColor: "white",
+        },
+      },
+    };
+
+    this.averageLineChartFour = new Chart(ctx, {
+      type: "line",
+      data: chartData,
+      options: chartOptions,
+    });
+  }
+
+  averageLineChartFourData(responseData) {
+    // Remove Data
+    this.averageLineChartFour.data.labels = [];
+    this.averageLineChartFour.data.datasets[1].data = [];
+    this.averageLineChartFour.data.datasets[0].backgroundColor = [];
+    this.averageLineChartFour.data.datasets[1].backgroundColor = [];
+    this.averageLineChartFour.update();
+
+    let averages = responseData[0]["unitHourlyAverages"];
+
+    averages.forEach((average) => {
+      for (let key in average) {
+        // Update Chart with new data
+        this.averageLineChartFour.data.labels.push(key);
+        this.averageLineChartFour.data.datasets[0].data.push(average[key]);
+        this.averageLineChartFour.data.datasets[1].data.push(average[key]);
+        // this.averageLineChartFour.data.datasets[0].backgroundColor = "#32A9D9";
+        // this.averageLineChartFour.data.datasets[1].backgroundColor =
+        //   "rgba(46, 78, 100, 1)";
+
+        this.averageLineChartFour.update();
+      }
+    });
+  }
+
   // Units
   createAverageBarChartFour() {
     const ctx = document.querySelector("#average-chart-four").getContext("2d");
@@ -797,7 +949,9 @@ class Charts {
 
     // Update Chart with new data
     this.averageBarChartFive.data.datasets[0].data.push(currentLevelZeroValue);
-    this.averageBarChartFive.data.datasets[1].data.push(currentLevelZeroAverage);
+    this.averageBarChartFive.data.datasets[1].data.push(
+      currentLevelZeroAverage
+    );
     this.averageBarChartFive.data.datasets[0].backgroundColor = "#32A9D9";
     this.averageBarChartFive.data.datasets[1].backgroundColor =
       "rgba(46, 78, 100, 1)";

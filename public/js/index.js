@@ -127,15 +127,18 @@ class Master {
           element.scrollTop = element.scrollHeight - element.clientHeight;
 
           // Display Weekly Off On Time
-          document.querySelector("#off-on-time").textContent = responseData[0]["weeklyoffontime"]["offontimepercentage"] + "%"
+          document.querySelector("#off-on-time").textContent =
+            responseData[0]["weeklyoffontime"]["offontimepercentage"] + "%";
 
-          document.querySelector("#daterange").textContent = responseData[0]["weeklyoffontime"]["daterange"]
+          document.querySelector("#daterange").textContent =
+            responseData[0]["weeklyoffontime"]["daterange"];
 
           this.charts.averageBarChartOneData(responseData);
           this.charts.averageBarChartTwoData(responseData);
           this.charts.averageBarChartThreeData(responseData);
           this.charts.averageBarChartFourData(responseData);
           this.charts.averageBarChartFiveData(responseData);
+          this.charts.averageLineChartFourData(responseData);
 
           document.querySelector("#status").style.color = "yellow";
           document.querySelector("#status").textContent = "Valid";
