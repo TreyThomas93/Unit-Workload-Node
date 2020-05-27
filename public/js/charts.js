@@ -662,7 +662,7 @@ class Charts {
           color = "green";
         }
       } else if (event === "System is Level Zero") {
-        color = "red";
+        color = "orange";
       }
 
       this.eventChart.data.datasets[0].pointBackgroundColor.push(color);
