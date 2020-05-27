@@ -16,7 +16,7 @@ require("dotenv").config();
 require("./config/passport")(passport);
 
 // MongoDB Connection
-const uri = `mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@Test-Cluster1-kppwc.mongodb.net/test?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@unitworkload-kppwc.mongodb.net/EMSAEastern?retryWrites=true&w=majority`;
 
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 console.log("Mongo Connected!");
