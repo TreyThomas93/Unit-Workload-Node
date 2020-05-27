@@ -79,7 +79,7 @@ class Master {
 
         let fontColor;
 
-        if (!outdated) {
+        if (outdated) {
           fontColor = "red";
           alert("[OUTDATED DATA]");
         } else {

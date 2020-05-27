@@ -245,6 +245,7 @@ class Charts {
             pointRadius: 0,
             borderDash: [15, 10],
             borderWidth: 2,
+            spanGaps: true,
           },
           {
             label: "Today",
@@ -254,6 +255,7 @@ class Charts {
             borderColor: "blue",
             pointRadius: 0,
             borderWidth: 2,
+            spanGaps: true,
           },
         ],
       };
@@ -377,6 +379,11 @@ class Charts {
         // Update Chart with new data
         this.unitChart.data.labels.push(average["time"]);
         this.unitChart.data.datasets[0].data.push(average["average"]);
+        // if (average["today"] === null) {
+        //   this.unitChart.data.datasets[1].data.push(Number.NaN);
+        // } else {
+        //   this.unitChart.data.datasets[1].data.push(average["today"]);
+        // }
         this.unitChart.data.datasets[1].data.push(average["today"]);
 
         this.unitChart.update();
@@ -492,12 +499,31 @@ class Charts {
     let chartData = {
       datasets: [
         {
-          label: "Events",
           pointRadius: [],
           pointStyle: "triangle",
           fill: false,
-          pointBackgroundColor: "red",
+          pointBackgroundColor: [],
           data: [],
+        },
+        {
+          label: "Level Zero",
+          backgroundColor: "orange",
+        },
+        {
+          label: "Above Current Threshold",
+          backgroundColor: "yellow",
+        },
+        {
+          label: "Above Max Threshold",
+          backgroundColor: "red",
+        },
+        {
+          label: "Late Call",
+          backgroundColor: "blue",
+        },
+        {
+          label: "Past EOS",
+          backgroundColor: "green",
         },
       ],
     };
@@ -555,6 +581,7 @@ class Charts {
           },
         ],
       },
+      spanGaps: true,
       animation: false,
       elements: {
         line: {
@@ -568,12 +595,25 @@ class Charts {
         fontColor: "white",
       },
       legend: {
+        display: true,
         labels: {
           filter: function (item, chart) {
             // Logic to remove a particular legend item goes here
-            return item.text == null || !item.text.includes("Events");
+            return (
+              item.text == null || !item.text.includes(["Events", undefined])
+            );
           },
           fontColor: "white",
+        },
+      },
+      tooltips: {
+        enabled: true,
+        mode: "single",
+        callbacks: {
+          label: function (tooltipItem, data) {
+            let label = data.datasets[0].label[tooltipItem.index - 1];
+            return label;
+          },
         },
       },
     };
@@ -589,24 +629,62 @@ class Charts {
     // Remove Data
     this.eventChart.data.labels = [];
     this.eventChart.data.datasets[0].data = [];
-    this.eventChart.data.datasets[0].pointRadius = []
+    this.eventChart.data.datasets[0].pointRadius = [];
+    this.eventChart.data.datasets[0].label = [];
+    this.eventChart.data.datasets[0].pointBackgroundColor = [];
     this.eventChart.update();
 
     let times = responseData[0]["logs"].map((log) => {
       let time = log["log"].split("-")[1];
+      let event = log["log"].split("-")[0].trim();
+      // this.eventChart.data.datasets[0].label.push(event);
+
+      let splitEvent = event.split(" ")[0];
+
+      let color;
+      let sep = event.split(" ");
+      let text;
+
+      if (splitEvent == "Unit") {
+        if (sep.length === 5) {
+          text = sep[2] + " " + sep[3] + " " + sep[4];
+        } else {
+          text = sep[2] + " " + sep[3];
+        }
+
+        if (text === "Above Current Threshold") {
+          color = "yellow";
+        } else if (text === "Above Max Threshold") {
+          color = "red";
+        } else if (text === "Received Late Call") {
+          color = "blue";
+        } else if (text === "Past EOS") {
+          color = "green";
+        }
+      } else if (event === "System is Level Zero") {
+        color = "red";
+      }
+
+      this.eventChart.data.datasets[0].pointBackgroundColor.push(color);
+
       return { x: moment(time, "HH:mm:ss"), y: 5 };
     });
 
     times.unshift({ x: moment("00:00:00", "HH:mm:ss"), y: 5 });
     times.push({ x: moment("23:00:00", "HH:mm:ss"), y: 5 });
 
+    this.eventChart.data.datasets[0].pointBackgroundColor.unshift("red");
+    this.eventChart.data.datasets[0].pointBackgroundColor.push("red");
+
     times.forEach((time) => {
       this.eventChart.data.datasets[0].data.push(time);
-      this.eventChart.data.datasets[0].pointRadius.push(10)
+      this.eventChart.data.datasets[0].pointRadius.push(10);
     });
 
-    this.eventChart.data.datasets[0].pointRadius[0] = 0
-    this.eventChart.data.datasets[0].pointRadius[this.eventChart.data.datasets[0].pointRadius.length - 1] = 0
+    this.eventChart.data.datasets[0].pointRadius[0] = 0;
+    this.eventChart.data.datasets[0].pointRadius[
+      this.eventChart.data.datasets[0].pointRadius.length - 1
+    ] = 0;
 
     this.eventChart.update();
   }
