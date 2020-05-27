@@ -8,6 +8,8 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
   master.fetchSystem();
 
+  master.promptLoadWindow();
+
   const resetNum = 600;
   let num = 0;
   setInterval(() => {
@@ -17,17 +19,107 @@ document.addEventListener("DOMContentLoaded", (e) => {
     }%`;
     if (num === resetNum) {
       num = 0;
+
+      master.promptLoadWindow();
+
       master.fetchLiveWorkload();
 
       master.fetchSystem();
     }
   }, 100);
+
+  document.body.addEventListener("click", (e) => {
+    let name = e.target.className;
+    if (name === "load-screen") {
+      master.removeLoadWindow();
+    }
+  });
 });
 
 class Master {
   constructor() {
     this.charts = charts;
     this.max_threshold = 1;
+
+    this.notified = true;
+    this.oldCount = 0;
+
+    this.screenWidth = screen.width;
+  }
+
+  promptLoadWindow() {
+    let loadScreen = document.createElement("div");
+
+    loadScreen.className = "load-screen";
+
+    loadScreen.innerHTML = `
+      <div>
+        <h1>Loading</h1>
+      </div>
+    `;
+
+    document.querySelector("html").style.overflowY = "hidden";
+
+    document.body.appendChild(loadScreen);
+  }
+
+  removeLoadWindow() {
+    document.querySelector(".load-screen").remove();
+
+    document.querySelector("html").style.overflowY = "auto";
+  }
+
+  promptNotificationTab(notification) {
+    let notificationTab = document.createElement("div");
+
+    notificationTab.className = "notification-tab";
+
+    notificationTab.innerHTML = `<div></div>`;
+
+    document.body.appendChild(notificationTab);
+
+    const width = 100;
+    let counter = 0;
+    let getWidth = setInterval(() => {
+      counter++;
+
+      if (counter === width) {
+        clearInterval(getWidth);
+        document.querySelector(".notification-tab > div").innerHTML = `
+        <h5>${notification}</h5>
+      `;
+
+        setTimeout(() => {
+          document.querySelector(".notification-tab > div").innerHTML = "";
+          this.removeNotificationTab();
+        }, 5000);
+      }
+
+      if (document.querySelector(".notification-tab") !== null) {
+        document.querySelector(
+          ".notification-tab > div"
+        ).style.width = `${counter}%`;
+      }
+    }, 1);
+  }
+
+  removeNotificationTab() {
+    const width = 0;
+    let counter = 100;
+    let getWidth = setInterval(() => {
+      counter--;
+
+      if (counter === width) {
+        clearInterval(getWidth);
+        document.querySelector(".notification-tab").remove();
+      }
+
+      if (document.querySelector(".notification-tab") !== null) {
+        document.querySelector(
+          ".notification-tab > div"
+        ).style.width = `${counter}%`;
+      }
+    }, 1);
   }
 
   timeDifference(time) {
@@ -73,6 +165,10 @@ class Master {
       .then((data) => {
         const { responseData, responseStatus } = data;
 
+        if (document.querySelector(".load-screen") !== null) {
+          this.removeLoadWindow();
+        }
+
         const updatedAt = responseData[0].updated_at;
 
         let outdated = this.timeDifference(updatedAt);
@@ -106,16 +202,21 @@ class Master {
         const { responseData, responseStatus } = data;
 
         if (responseData.length != 0) {
-
           if (responseData[0]["valid"]) {
+            // get number of list items in system and compare to new data amount.
+            // If more data amount, then trigger notification alarm.
+
             let logOutput = "";
 
             let systemLog = responseData[0]["logs"];
 
+            let newCount = 0;
             systemLog.forEach((log) => {
+              newCount++;
+
               logOutput += `
-        <li>${log["log"]} [Driving: ${log["driving"]} - Posting: ${log["posting"]} - Level: ${log["level"]}]</li>
-      `;
+                <li>${log["log"]} [Driving: ${log["driving"]} - Posting: ${log["posting"]} - Level: ${log["level"]}]</li>
+              `;
             });
 
             if (logOutput === "") {
@@ -123,6 +224,27 @@ class Master {
             }
 
             document.querySelector("#system-log").innerHTML = logOutput;
+
+            let result = Math.abs(newCount - this.oldCount);
+
+            if (result >= 1 && !this.notified) {
+              this.oldCount = newCount;
+              let latest = document.querySelector("#system-log > li:last-child")
+                .textContent;
+
+              let refined = latest.substring(0, latest.indexOf("["));
+
+              if (this.screenWidth > 1080) {
+                this.promptNotificationTab(refined);
+              }
+
+              // alert tone
+              const audio = new Audio("audio/notification.mp3");
+              audio.play();
+            } else {
+              this.notified = false;
+              this.oldCount = newCount;
+            }
 
             // Autoscroll to bottom of ul
             const element = document.querySelector("#system-log");
@@ -140,7 +262,7 @@ class Master {
             this.charts.onCallChartData(responseData);
             this.charts.postTimeChartData(responseData);
             this.charts.driveTimeChartData(responseData);
-            this.charts.eventChartData(responseData)
+            this.charts.eventChartData(responseData);
 
             document.querySelector("#status").style.color = "yellow";
             document.querySelector("#status").textContent = "Valid";

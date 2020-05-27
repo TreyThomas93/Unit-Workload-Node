@@ -27,6 +27,7 @@ html {
   background-color: var(--background);
   color: white;
   overflow-x: hidden;
+  position: relative;
 }
 
 #message-container {
@@ -46,6 +47,48 @@ html {
 
 .success {
   background-color: #007acc;
+}
+
+.load-screen {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(1, 1, 1, 0.75);
+  z-index: 2000;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+  &>div {
+    margin: auto;
+  }
+}
+
+.notification-tab {
+  height: 50px;
+  width: 250px;
+  position: fixed;
+  top: 50%;
+  left: 0;
+
+  &>div {
+    height: 100%;
+    width: 0%;
+    background-color: red;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    box-shadow: 0 0 10px rgba(1, 1, 1, 0.75);
+
+    &>h5 {
+      font-size: 0.8rem;
+      margin: auto;
+    }
+  }
 }
 
 h1 {
