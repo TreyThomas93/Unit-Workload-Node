@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 const passport = require("passport");
 const bodyParser = require("body-parser");
 const sslRedirect = require("heroku-ssl-redirect");
-const methodOverride = require('method-override');
+const methodOverride = require("method-override");
 
 const app = express();
 
@@ -34,14 +34,16 @@ app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 
 // PUT/DELETE
-app.use(methodOverride('_method'));
+app.use(methodOverride("_method"));
 
+let time = 2592000000 // 30 Days
 // Express Session
 app.use(
   session({
     secret: "secret",
     resave: true,
     saveUninitialized: true,
+    cookie: { maxAge: time },
   })
 );
 
@@ -55,7 +57,7 @@ app.use(flash());
 // Global Vars
 app.use((req, res, next) => {
   res.locals.error = req.flash("error");
-  res.locals.success = req.flash("success")
+  res.locals.success = req.flash("success");
   next();
 });
 
