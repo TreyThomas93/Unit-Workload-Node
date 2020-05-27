@@ -82,22 +82,18 @@
   overflow-x: auto;
 }
 
-#system-report #average-chart-one-container,
-#system-report #average-chart-two-container,
-#system-report #average-chart-three-container,
-#system-report #average-chart-four-container,
-#system-report #average-chart-five-container {
-  display: -ms-grid !important;
-  display: grid !important;
-  height: 500px;
-}
-
 #system-report #system-report-graphs {
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: (1fr)[1];
       grid-template-columns: repeat(1, 1fr);
   grid-gap: 1em;
+}
+
+#system-report #system-report-graphs > div {
+  display: -ms-grid !important;
+  display: grid !important;
+  height: 500px;
 }
 
 .snapShot {

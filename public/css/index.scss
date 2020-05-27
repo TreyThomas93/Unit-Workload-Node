@@ -75,19 +75,15 @@
     overflow-x: auto;
   }
 
-  #average-chart-one-container,
-  #average-chart-two-container,
-  #average-chart-three-container,
-  #average-chart-four-container,
-  #average-chart-five-container {
-    display: grid !important;
-    height: 500px;
-  }
-
   #system-report-graphs {
     display: grid;
     grid-template-columns: repeat(1, 1fr);
     grid-gap: 1em;
+
+    &>div {
+      display: grid !important;
+      height: 500px;
+    }
   }
 }
 

@@ -54,7 +54,7 @@ class Master {
     time_start.setHours(value_start[0], value_start[1], 0);
     time_end.setHours(value_end[0], value_end[1], 0);
 
-    let diff = (time_end - time_start) / 1000;
+    let diff = Math.abs((time_end - time_start) / 1000);
 
     // 5 minutes
     if (diff >= 300) {
@@ -79,7 +79,7 @@ class Master {
 
         let fontColor;
 
-        if (outdated) {
+        if (!outdated) {
           fontColor = "red";
           alert("[OUTDATED DATA]");
         } else {
@@ -105,46 +105,49 @@ class Master {
       .then((data) => {
         const { responseData, responseStatus } = data;
 
-        if (responseData[0]["valid"]) {
-          let logOutput = "";
+        if (responseData.length != 0) {
 
-          let systemLog = responseData[0]["systemLog"];
+          if (responseData[0]["valid"]) {
+            let logOutput = "";
 
-          systemLog.forEach((log) => {
-            logOutput += `
+            let systemLog = responseData[0]["logs"];
+
+            systemLog.forEach((log) => {
+              logOutput += `
         <li>${log["log"]} [Driving: ${log["driving"]} - Posting: ${log["posting"]} - Level: ${log["level"]}]</li>
       `;
-          });
+            });
 
-          if (logOutput === "") {
-            logOutput = "No Events Logged";
+            if (logOutput === "") {
+              logOutput = "No Events Logged";
+            }
+
+            document.querySelector("#system-log").innerHTML = logOutput;
+
+            // Autoscroll to bottom of ul
+            const element = document.querySelector("#system-log");
+            element.scrollTop = element.scrollHeight - element.clientHeight;
+
+            // Display Weekly Off On Time
+            document.querySelector("#off-on-time").textContent =
+              responseData[0]["weekly_off_on_time"]["percentage"] + "%";
+
+            document.querySelector("#daterange").textContent =
+              responseData[0]["weekly_off_on_time"]["daterange"];
+
+            this.charts.unitChartData(responseData);
+            this.charts.callChartData(responseData);
+            this.charts.onCallChartData(responseData);
+            this.charts.postTimeChartData(responseData);
+            this.charts.driveTimeChartData(responseData);
+            this.charts.eventChartData(responseData)
+
+            document.querySelector("#status").style.color = "yellow";
+            document.querySelector("#status").textContent = "Valid";
+          } else {
+            document.querySelector("#status").style.color = "red";
+            document.querySelector("#status").textContent = "Invalid";
           }
-
-          document.querySelector("#system-log").innerHTML = logOutput;
-
-          // Autoscroll to bottom of ul
-          const element = document.querySelector("#system-log");
-          element.scrollTop = element.scrollHeight - element.clientHeight;
-
-          // Display Weekly Off On Time
-          document.querySelector("#off-on-time").textContent =
-            responseData[0]["weeklyoffontime"]["offontimepercentage"] + "%";
-
-          document.querySelector("#daterange").textContent =
-            responseData[0]["weeklyoffontime"]["daterange"];
-
-          this.charts.averageBarChartOneData(responseData);
-          this.charts.averageBarChartTwoData(responseData);
-          this.charts.averageBarChartThreeData(responseData);
-          this.charts.averageBarChartFourData(responseData);
-          this.charts.averageBarChartFiveData(responseData);
-          this.charts.averageLineChartFourData(responseData);
-
-          document.querySelector("#status").style.color = "yellow";
-          document.querySelector("#status").textContent = "Valid";
-        } else {
-          document.querySelector("#status").style.color = "red";
-          document.querySelector("#status").textContent = "Invalid";
         }
       })
       .catch((err) => console.log(err));

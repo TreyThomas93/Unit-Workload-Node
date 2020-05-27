@@ -46,7 +46,7 @@ html {
 }
 
 .success {
-  background-color: #007ACC;
+  background-color: #007acc;
 }
 
 h1 {
@@ -110,6 +110,7 @@ main {
   width: 100%;
   margin: auto;
   max-width: 1400px;
+  height: 100%;
 }
 
 footer {
@@ -137,12 +138,7 @@ footer {
 }
 
 @media (min-width: 1080px) {
-  #workload-bar-chart-container,
-  #average-chart-one-container,
-  #average-chart-two-container,
-  #average-chart-three-container,
-  #average-chart-four-container,
-  #average-chart-five-container {
+  #workload-bar-chart-container {
     display: -ms-grid !important;
     display: grid !important;
     height: 500px;
@@ -150,9 +146,14 @@ footer {
   #system-report-graphs {
     display: -ms-grid;
     display: grid;
-    -ms-grid-columns: (1fr)[3] !important;
-        grid-template-columns: repeat(3, 1fr) !important;
+    -ms-grid-columns: (1fr)[2] !important;
+        grid-template-columns: repeat(2, 1fr) !important;
     grid-gap: 1em;
+  }
+  #system-report-graphs > div {
+    display: -ms-grid !important;
+    display: grid !important;
+    height: 500px;
   }
   #system-cards {
     -ms-grid-columns: (1fr)[8] !important;

@@ -1,20 +1,32 @@
 class Charts {
   constructor() {
     this.liveWorkloadBarChart;
-    this.averageBarChartOne;
-    this.averageBarChartTwo;
-    this.averageBarChartThree;
-    this.averageBarChartFour;
-    this.averageBarChartFive;
-    this.averageLineChartFour;
+    this.unitChart;
+    this.callChart;
+    this.onCallChart;
+    this.postTimeChart;
+    this.driveTimeChart;
+    this.eventChart;
 
     this.createLiveWorkloadBarChart();
-    this.createAverageBarChartOne();
-    this.createAverageBarChartTwo();
-    this.createAverageBarChartThree();
-    this.createAverageLineChartFour();
-    this.createAverageBarChartFour();
-    this.createAverageBarChartFive();
+
+    this.chartGenerator("#unit-chart", "Hour", "units", "Units");
+    this.chartGenerator("#calls-chart", "Hour", "calls", "Calls");
+    this.chartGenerator(
+      "#on-call-time-chart",
+      "Hour",
+      "on-call-time",
+      "On Call Time"
+    );
+    this.chartGenerator("#post-time-chart", "Hour", "post-time", "Post Time");
+    this.chartGenerator(
+      "#drive-time-chart",
+      "Hour",
+      "drive-time",
+      "Drive Time"
+    );
+
+    this.createEventChart();
   }
 
   // Live Workload Bar Chart
@@ -215,411 +227,277 @@ class Charts {
     });
   }
 
-  // Post Time, Drive Time, On Call Time
-  createAverageBarChartOne() {
-    const ctx = document.querySelector("#average-chart-one").getContext("2d");
+  // Generate Line Charts
+  chartGenerator(element, xLabel, yLabel, title) {
+    try {
+      const ctx = document.querySelector(element).getContext("2d");
 
-    // Chart Data Display
-    let chartData = {
-      labels: ["On Call Time", "Post Time", "Drive Time"],
-      datasets: [
-        {
-          label: "Current Value",
-          backgroundColor: [],
-          data: [],
-        },
-        {
-          label: "Current Average",
-          backgroundColor: [],
-          data: [],
-        },
-      ],
-    };
-
-    // Chart Data Options
-    let chartOptions = {
-      maintainAspectRatio: false,
-      scales: {
-        xAxes: [
+      // Chart Data Display
+      let chartData = {
+        labels: [],
+        datasets: [
           {
-            stacked: false,
-            ticks: {
-              fontSize: 12,
-              fontColor: "white",
-            },
-            barPercentage: 0.7,
-            gridLines: {
-              color: "rgba(255, 255, 255, 0.25)",
-            },
-            scaleLabel: {
-              display: false,
-              labelString: "Categories",
-              fontColor: "white",
-              fontSize: 15,
-            },
+            label: "Average",
+            backgroundColor: [],
+            data: [],
+            fill: false,
+            borderColor: "white",
+            pointRadius: 0,
+            borderDash: [15, 10],
+            borderWidth: 2,
+          },
+          {
+            label: "Today",
+            backgroundColor: [],
+            data: [],
+            fill: false,
+            borderColor: "blue",
+            pointRadius: 0,
+            borderWidth: 2,
           },
         ],
-        yAxes: [
-          {
-            stacked: false,
-            ticks: {
-              fontSize: 12,
-              beginAtZero: true,
-              fontColor: "white",
+      };
+
+      // Chart Data Options
+      let chartOptions = {
+        maintainAspectRatio: false,
+        scales: {
+          xAxes: [
+            {
+              stacked: false,
+              ticks: {
+                fontSize: 12,
+                fontColor: "white",
+              },
+              barPercentage: 0.7,
+              gridLines: {
+                color: "rgba(255, 255, 255, 0.25)",
+              },
+              scaleLabel: {
+                display: true,
+                labelString: xLabel,
+                fontColor: "white",
+                fontSize: 15,
+              },
             },
-            gridLines: {
-              color: "rgba(255, 255, 255, 0.25)",
+          ],
+          yAxes: [
+            {
+              stacked: false,
+              ticks: {
+                fontSize: 12,
+                beginAtZero: true,
+                fontColor: "white",
+                // max: 60,
+              },
+              gridLines: {
+                color: "rgba(255, 255, 255, 0.25)",
+              },
+              scaleLabel: {
+                display: true,
+                labelString: yLabel,
+                fontColor: "white",
+                fontSize: 15,
+              },
             },
-            scaleLabel: {
-              display: true,
-              labelString: "Time(Minutes)",
-              fontColor: "white",
-              fontSize: 15,
-            },
-          },
-        ],
-      },
-      animation: false,
-      elements: {
-        line: {
-          tension: 0,
+          ],
         },
-      },
-      title: {
-        display: true,
-        text: "On Call Time, Post Time, Drive Time",
-        fontSize: 15,
-        fontColor: "white",
-      },
-      legend: {
-        labels: {
-          //   filter: function (item, chart) {
-          //     // Logic to remove a particular legend item goes here
-          //     return item.text == null || !item.text.includes("Current Value");
-          //   },
+        animation: false,
+        elements: {
+          line: {
+            tension: 0,
+          },
+        },
+        title: {
+          display: true,
+          text: title,
+          fontSize: 15,
           fontColor: "white",
         },
-      },
-    };
+        legend: {
+          labels: {
+            //   filter: function (item, chart) {
+            //     // Logic to remove a particular legend item goes here
+            //     return item.text == null || !item.text.includes("Current Value");
+            //   },
+            fontColor: "white",
+          },
+        },
+      };
 
-    this.averageBarChartOne = new Chart(ctx, {
-      type: "bar",
-      data: chartData,
-      options: chartOptions,
-    });
+      if (title === "Units") {
+        this.unitChart = new Chart(ctx, {
+          type: "line",
+          data: chartData,
+          options: chartOptions,
+        });
+      } else if (title === "Calls") {
+        this.callChart = new Chart(ctx, {
+          type: "line",
+          data: chartData,
+          options: chartOptions,
+        });
+      } else if (title === "On Call Time") {
+        this.onCallChart = new Chart(ctx, {
+          type: "line",
+          data: chartData,
+          options: chartOptions,
+        });
+      } else if (title === "Post Time") {
+        this.postTimeChart = new Chart(ctx, {
+          type: "line",
+          data: chartData,
+          options: chartOptions,
+        });
+      } else if (title === "Drive Time") {
+        this.driveTimeChart = new Chart(ctx, {
+          type: "line",
+          data: chartData,
+          options: chartOptions,
+        });
+      }
+    } catch (err) {
+      console.log(err);
+    }
   }
 
-  averageBarChartOneData(responseData) {
-    let currentOnCallValue = responseData[0]["accumulated_on_call_time"];
-    let currentOnCallAverage = responseData[0]["on_call_average"];
+  unitChartData(responseData) {
+    try {
+      // Remove Data
+      this.unitChart.data.labels = [];
+      this.unitChart.data.datasets[1].data = [];
+      this.unitChart.data.datasets[0].data = [];
+      this.unitChart.data.datasets[0].backgroundColor = [];
+      this.unitChart.data.datasets[1].backgroundColor = [];
+      this.unitChart.update();
 
-    let currentPostTimeValue = responseData[0]["accumulated_post_time"];
-    let currentPostTimeAverage = responseData[0]["post_time_average"];
+      let averages = responseData[0]["hourly"]["unit"];
 
-    let currentDriveTimeValue = responseData[0]["accumulated_drive_time"];
-    let currentDriveTimeAverage = responseData[0]["drive_time_average"];
+      averages.forEach((average) => {
+        // Update Chart with new data
+        this.unitChart.data.labels.push(average["time"]);
+        this.unitChart.data.datasets[0].data.push(average["average"]);
+        this.unitChart.data.datasets[1].data.push(average["today"]);
 
-    // Remove Data
-    this.averageBarChartOne.data.datasets[0].data = [];
-    this.averageBarChartOne.data.datasets[1].data = [];
-    this.averageBarChartOne.data.datasets[0].backgroundColor = [];
-    this.averageBarChartOne.data.datasets[1].backgroundColor = [];
-    this.averageBarChartOne.update();
-    //
-
-    // Update Chart with new data
-    this.averageBarChartOne.data.datasets[0].data.push(
-      currentOnCallValue,
-      currentPostTimeValue,
-      currentDriveTimeValue
-    );
-    this.averageBarChartOne.data.datasets[1].data.push(
-      currentOnCallAverage,
-      currentPostTimeAverage,
-      currentDriveTimeAverage
-    );
-
-    this.averageBarChartOne.data.datasets[0].backgroundColor = "#32A9D9";
-    this.averageBarChartOne.data.datasets[1].backgroundColor =
-      "rgba(46, 78, 100, 1)";
-
-    this.averageBarChartOne.update();
+        this.unitChart.update();
+      });
+    } catch (err) {
+      console.log(err);
+    }
   }
 
-  // Late Call, Past EOS
-  createAverageBarChartTwo() {
-    const ctx = document.querySelector("#average-chart-two").getContext("2d");
+  callChartData(responseData) {
+    try {
+      // Remove Data
+      this.callChart.data.labels = [];
+      this.callChart.data.datasets[1].data = [];
+      this.callChart.data.datasets[0].data = [];
+      this.callChart.data.datasets[0].backgroundColor = [];
+      this.callChart.data.datasets[1].backgroundColor = [];
+      this.callChart.update();
 
-    // Chart Data Display
+      let averages = responseData[0]["hourly"]["call"];
+
+      averages.forEach((average) => {
+        // Update Chart with new data
+        this.callChart.data.labels.push(average["time"]);
+        this.callChart.data.datasets[0].data.push(average["average"]);
+        this.callChart.data.datasets[1].data.push(average["today"]);
+
+        this.callChart.update();
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  onCallChartData(responseData) {
+    try {
+      // Remove Data
+      this.onCallChart.data.labels = [];
+      this.onCallChart.data.datasets[1].data = [];
+      this.onCallChart.data.datasets[0].data = [];
+      this.onCallChart.data.datasets[0].backgroundColor = [];
+      this.onCallChart.data.datasets[1].backgroundColor = [];
+      this.onCallChart.update();
+
+      let averages = responseData[0]["hourly"]["on_call_time"];
+
+      averages.forEach((average) => {
+        // Update Chart with new data
+        this.onCallChart.data.labels.push(average["time"]);
+        this.onCallChart.data.datasets[0].data.push(average["average"]);
+        this.onCallChart.data.datasets[1].data.push(average["today"]);
+
+        this.onCallChart.update();
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  postTimeChartData(responseData) {
+    try {
+      // Remove Data
+      this.postTimeChart.data.labels = [];
+      this.postTimeChart.data.datasets[1].data = [];
+      this.postTimeChart.data.datasets[0].data = [];
+      this.postTimeChart.data.datasets[0].backgroundColor = [];
+      this.postTimeChart.data.datasets[1].backgroundColor = [];
+      this.postTimeChart.update();
+
+      let averages = responseData[0]["hourly"]["post_time"];
+
+      averages.forEach((average) => {
+        // Update Chart with new data
+        this.postTimeChart.data.labels.push(average["time"]);
+        this.postTimeChart.data.datasets[0].data.push(average["average"]);
+        this.postTimeChart.data.datasets[1].data.push(average["today"]);
+
+        this.postTimeChart.update();
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  driveTimeChartData(responseData) {
+    try {
+      // Remove Data
+      this.driveTimeChart.data.labels = [];
+      this.driveTimeChart.data.datasets[1].data = [];
+      this.driveTimeChart.data.datasets[0].data = [];
+      this.driveTimeChart.data.datasets[0].backgroundColor = [];
+      this.driveTimeChart.data.datasets[1].backgroundColor = [];
+      this.driveTimeChart.update();
+
+      let averages = responseData[0]["hourly"]["drive_time"];
+
+      averages.forEach((average) => {
+        // Update Chart with new data
+        this.driveTimeChart.data.labels.push(average["time"]);
+        this.driveTimeChart.data.datasets[0].data.push(average["average"]);
+        this.driveTimeChart.data.datasets[1].data.push(average["today"]);
+
+        this.driveTimeChart.update();
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  createEventChart() {
+    const ctx = document.querySelector("#event-chart").getContext("2d");
+
     let chartData = {
-      labels: ["Late Call", "Past EOS"],
       datasets: [
         {
-          label: "Current Value",
-          backgroundColor: [],
-          data: [],
-        },
-        {
-          label: "Current Average",
-          backgroundColor: [],
-          data: [],
-        },
-      ],
-    };
-
-    // Chart Data Options
-    let chartOptions = {
-      maintainAspectRatio: false,
-      scales: {
-        xAxes: [
-          {
-            stacked: false,
-            ticks: {
-              fontSize: 12,
-              fontColor: "white",
-            },
-            barPercentage: 0.7,
-            gridLines: {
-              color: "rgba(255, 255, 255, 0.25)",
-            },
-            scaleLabel: {
-              display: false,
-              labelString: "Categories",
-              fontColor: "white",
-              fontSize: 15,
-            },
-          },
-        ],
-        yAxes: [
-          {
-            stacked: false,
-            ticks: {
-              fontSize: 12,
-              beginAtZero: true,
-              fontColor: "white",
-              max: 15,
-            },
-            gridLines: {
-              color: "rgba(255, 255, 255, 0.25)",
-            },
-            scaleLabel: {
-              display: true,
-              labelString: "Value",
-              fontColor: "white",
-              fontSize: 15,
-            },
-          },
-        ],
-      },
-      animation: false,
-      elements: {
-        line: {
-          tension: 0,
-        },
-      },
-      title: {
-        display: true,
-        text: "Late Call, Past EOS",
-        fontSize: 15,
-        fontColor: "white",
-      },
-      legend: {
-        labels: {
-          //   filter: function (item, chart) {
-          //     // Logic to remove a particular legend item goes here
-          //     return item.text == null || !item.text.includes("Current Value");
-          //   },
-          fontColor: "white",
-        },
-      },
-    };
-
-    this.averageBarChartTwo = new Chart(ctx, {
-      type: "bar",
-      data: chartData,
-      options: chartOptions,
-    });
-  }
-
-  averageBarChartTwoData(responseData) {
-    let currentLateCallValue = responseData[0]["accumulated_late_calls"];
-    let currentLateCallAverage = responseData[0]["late_call_average"];
-
-    let currentPastEOSValue = responseData[0]["accumulated_past_eos"];
-    let currentPastEOSAverage = responseData[0]["past_eos_average"];
-
-    // Remove Data
-    this.averageBarChartTwo.data.datasets[0].data = [];
-    this.averageBarChartTwo.data.datasets[1].data = [];
-    this.averageBarChartTwo.data.datasets[0].backgroundColor = [];
-    this.averageBarChartTwo.data.datasets[1].backgroundColor = [];
-    this.averageBarChartTwo.update();
-    //
-
-    // Update Chart with new data
-    this.averageBarChartTwo.data.datasets[0].data.push(
-      currentLateCallValue,
-      currentPastEOSValue
-    );
-    this.averageBarChartTwo.data.datasets[1].data.push(
-      currentLateCallAverage,
-      currentPastEOSAverage
-    );
-
-    this.averageBarChartTwo.data.datasets[0].backgroundColor = "#32A9D9";
-    this.averageBarChartTwo.data.datasets[1].backgroundColor =
-      "rgba(46, 78, 100, 1)";
-
-    this.averageBarChartTwo.update();
-  }
-
-  // Calls
-  createAverageBarChartThree() {
-    const ctx = document.querySelector("#average-chart-three").getContext("2d");
-
-    // Chart Data Display
-    let chartData = {
-      labels: ["Calls"],
-      datasets: [
-        {
-          label: "Current Value",
-          backgroundColor: [],
-          data: [],
-        },
-        {
-          label: "Current Average",
-          backgroundColor: [],
-          data: [],
-        },
-      ],
-    };
-
-    // Chart Data Options
-    let chartOptions = {
-      maintainAspectRatio: false,
-      scales: {
-        xAxes: [
-          {
-            stacked: false,
-            ticks: {
-              fontSize: 12,
-              fontColor: "white",
-            },
-            barPercentage: 0.7,
-            gridLines: {
-              color: "rgba(255, 255, 255, 0.25)",
-            },
-            scaleLabel: {
-              display: false,
-              labelString: "Categories",
-              fontColor: "white",
-              fontSize: 15,
-            },
-          },
-        ],
-        yAxes: [
-          {
-            stacked: false,
-            ticks: {
-              fontSize: 12,
-              beginAtZero: true,
-              fontColor: "white",
-              max: 300,
-            },
-            gridLines: {
-              color: "rgba(255, 255, 255, 0.25)",
-            },
-            scaleLabel: {
-              display: true,
-              labelString: "Calls",
-              fontColor: "white",
-              fontSize: 15,
-            },
-          },
-        ],
-      },
-      animation: false,
-      elements: {
-        line: {
-          tension: 0,
-        },
-      },
-      title: {
-        display: true,
-        text: "Calls",
-        fontSize: 15,
-        fontColor: "white",
-      },
-      legend: {
-        labels: {
-          //   filter: function (item, chart) {
-          //     // Logic to remove a particular legend item goes here
-          //     return item.text == null || !item.text.includes("Current Value");
-          //   },
-          fontColor: "white",
-        },
-      },
-    };
-
-    this.averageBarChartThree = new Chart(ctx, {
-      type: "bar",
-      data: chartData,
-      options: chartOptions,
-    });
-  }
-
-  averageBarChartThreeData(responseData) {
-    let currentCallValue = responseData[0]["accumulated_calls"];
-    let currentCallAverage = responseData[0]["call_average"];
-
-    // Remove Data
-    this.averageBarChartThree.data.datasets[0].data = [];
-    this.averageBarChartThree.data.datasets[1].data = [];
-    this.averageBarChartThree.data.datasets[0].backgroundColor = [];
-    this.averageBarChartThree.data.datasets[1].backgroundColor = [];
-    this.averageBarChartThree.update();
-    //
-
-    // Update Chart with new data
-    this.averageBarChartThree.data.datasets[0].data.push(currentCallValue);
-    this.averageBarChartThree.data.datasets[1].data.push(currentCallAverage);
-
-    this.averageBarChartThree.data.datasets[0].backgroundColor = "#32A9D9";
-    this.averageBarChartThree.data.datasets[1].backgroundColor =
-      "rgba(46, 78, 100, 1)";
-
-    this.averageBarChartThree.update();
-  }
-
-  // Units Per Hour Line
-  // Units
-  createAverageLineChartFour() {
-    const ctx = document
-      .querySelector("#average-chart-four-line")
-      .getContext("2d");
-
-    // Chart Data Display
-    let chartData = {
-      labels: [],
-      datasets: [
-        {
-          label: "Average",
-          backgroundColor: [],
-          data: [],
+          label: "Events",
+          pointRadius: [],
+          pointStyle: "triangle",
           fill: false,
-          borderColor: "white",
-          pointRadius: 0,
-          borderDash: [15, 10],
-          borderWidth: 2
-        },
-        {
-          label: "Today",
-          backgroundColor: [],
+          pointBackgroundColor: "red",
           data: [],
-          fill: false,
-          borderColor: "blue",
-          pointRadius: 0,
-          borderWidth: 2
         },
       ],
     };
@@ -635,16 +513,24 @@ class Charts {
               fontSize: 12,
               fontColor: "white",
             },
-            barPercentage: 0.7,
             gridLines: {
               color: "rgba(255, 255, 255, 0.25)",
             },
             scaleLabel: {
-              display: false,
-              labelString: "Categories",
+              display: true,
+              labelString: "",
               fontColor: "white",
               fontSize: 15,
             },
+            type: "time",
+            time: {
+              unit: "hour",
+
+              displayFormats: {
+                hour: "HH:mm",
+              },
+            },
+            position: "bottom",
           },
         ],
         yAxes: [
@@ -654,14 +540,15 @@ class Charts {
               fontSize: 12,
               beginAtZero: true,
               fontColor: "white",
-              // max: 60,
+              max: 10,
+              display: false,
             },
             gridLines: {
               color: "rgba(255, 255, 255, 0.25)",
             },
             scaleLabel: {
-              display: true,
-              labelString: "Units",
+              display: false,
+              labelString: "",
               fontColor: "white",
               fontSize: 15,
             },
@@ -676,287 +563,52 @@ class Charts {
       },
       title: {
         display: true,
-        text: "Units",
+        text: "Events",
         fontSize: 15,
         fontColor: "white",
       },
       legend: {
         labels: {
-          //   filter: function (item, chart) {
-          //     // Logic to remove a particular legend item goes here
-          //     return item.text == null || !item.text.includes("Current Value");
-          //   },
+          filter: function (item, chart) {
+            // Logic to remove a particular legend item goes here
+            return item.text == null || !item.text.includes("Events");
+          },
           fontColor: "white",
         },
       },
     };
 
-    this.averageLineChartFour = new Chart(ctx, {
+    this.eventChart = new Chart(ctx, {
       type: "line",
       data: chartData,
       options: chartOptions,
     });
   }
 
-  averageLineChartFourData(responseData) {
+  eventChartData(responseData) {
     // Remove Data
-    this.averageLineChartFour.data.labels = [];
-    this.averageLineChartFour.data.datasets[1].data = [];
-    this.averageLineChartFour.data.datasets[0].backgroundColor = [];
-    this.averageLineChartFour.data.datasets[1].backgroundColor = [];
-    this.averageLineChartFour.update();
+    this.eventChart.data.labels = [];
+    this.eventChart.data.datasets[0].data = [];
+    this.eventChart.data.datasets[0].pointRadius = []
+    this.eventChart.update();
 
-    let averages = responseData[0]["unitHourlyAverages"];
-
-    averages.forEach((average) => {
-      for (let key in average) {
-        // Update Chart with new data
-        this.averageLineChartFour.data.labels.push(key);
-        this.averageLineChartFour.data.datasets[0].data.push(average[key]);
-        this.averageLineChartFour.data.datasets[1].data.push(average[key]);
-        // this.averageLineChartFour.data.datasets[0].backgroundColor = "#32A9D9";
-        // this.averageLineChartFour.data.datasets[1].backgroundColor =
-        //   "rgba(46, 78, 100, 1)";
-
-        this.averageLineChartFour.update();
-      }
+    let times = responseData[0]["logs"].map((log) => {
+      let time = log["log"].split("-")[1];
+      return { x: moment(time, "HH:mm:ss"), y: 5 };
     });
-  }
 
-  // Units
-  createAverageBarChartFour() {
-    const ctx = document.querySelector("#average-chart-four").getContext("2d");
+    times.unshift({ x: moment("00:00:00", "HH:mm:ss"), y: 5 });
+    times.push({ x: moment("23:00:00", "HH:mm:ss"), y: 5 });
 
-    // Chart Data Display
-    let chartData = {
-      labels: ["Units"],
-      datasets: [
-        {
-          label: "Current Value",
-          backgroundColor: [],
-          data: [],
-        },
-        {
-          label: "Average",
-          backgroundColor: [],
-          data: [],
-        },
-      ],
-    };
-
-    // Chart Data Options
-    let chartOptions = {
-      maintainAspectRatio: false,
-      scales: {
-        xAxes: [
-          {
-            stacked: false,
-            ticks: {
-              fontSize: 12,
-              fontColor: "white",
-            },
-            barPercentage: 0.7,
-            gridLines: {
-              color: "rgba(255, 255, 255, 0.25)",
-            },
-            scaleLabel: {
-              display: false,
-              labelString: "Categories",
-              fontColor: "white",
-              fontSize: 15,
-            },
-          },
-        ],
-        yAxes: [
-          {
-            stacked: false,
-            ticks: {
-              fontSize: 12,
-              beginAtZero: true,
-              fontColor: "white",
-              max: 60,
-            },
-            gridLines: {
-              color: "rgba(255, 255, 255, 0.25)",
-            },
-            scaleLabel: {
-              display: true,
-              labelString: "Units",
-              fontColor: "white",
-              fontSize: 15,
-            },
-          },
-        ],
-      },
-      animation: false,
-      elements: {
-        line: {
-          tension: 0,
-        },
-      },
-      title: {
-        display: true,
-        text: "Units",
-        fontSize: 15,
-        fontColor: "white",
-      },
-      legend: {
-        labels: {
-          //   filter: function (item, chart) {
-          //     // Logic to remove a particular legend item goes here
-          //     return item.text == null || !item.text.includes("Current Value");
-          //   },
-          fontColor: "white",
-        },
-      },
-    };
-
-    this.averageBarChartFour = new Chart(ctx, {
-      type: "bar",
-      data: chartData,
-      options: chartOptions,
+    times.forEach((time) => {
+      this.eventChart.data.datasets[0].data.push(time);
+      this.eventChart.data.datasets[0].pointRadius.push(10)
     });
-  }
 
-  averageBarChartFourData(responseData) {
-    let currentUnitValue = responseData[0]["accumulated_units"];
-    let currentUnitAverage = responseData[0]["unit_average"];
+    this.eventChart.data.datasets[0].pointRadius[0] = 0
+    this.eventChart.data.datasets[0].pointRadius[this.eventChart.data.datasets[0].pointRadius.length - 1] = 0
 
-    // Remove Data
-    this.averageBarChartFour.data.datasets[0].data = [];
-    this.averageBarChartFour.data.datasets[1].data = [];
-    this.averageBarChartFour.data.datasets[0].backgroundColor = [];
-    this.averageBarChartFour.data.datasets[1].backgroundColor = [];
-    this.averageBarChartFour.update();
-    //
-
-    // Update Chart with new data
-    this.averageBarChartFour.data.datasets[0].data.push(currentUnitValue);
-    this.averageBarChartFour.data.datasets[1].data.push(currentUnitAverage);
-    this.averageBarChartFour.data.datasets[0].backgroundColor = "#32A9D9";
-    this.averageBarChartFour.data.datasets[1].backgroundColor =
-      "rgba(46, 78, 100, 1)";
-
-    this.averageBarChartFour.update();
-  }
-
-  // Level Zero
-  createAverageBarChartFive() {
-    const ctx = document.querySelector("#average-chart-five").getContext("2d");
-
-    // Chart Data Display
-    let chartData = {
-      labels: ["Level Zero"],
-      datasets: [
-        {
-          label: "Current Value",
-          backgroundColor: [],
-          data: [],
-        },
-        {
-          label: "Current Average",
-          backgroundColor: [],
-          data: [],
-        },
-      ],
-    };
-
-    // Chart Data Options
-    let chartOptions = {
-      maintainAspectRatio: false,
-      scales: {
-        xAxes: [
-          {
-            stacked: false,
-            ticks: {
-              fontSize: 12,
-              fontColor: "white",
-            },
-            barPercentage: 0.7,
-            gridLines: {
-              color: "rgba(255, 255, 255, 0.25)",
-            },
-            scaleLabel: {
-              display: false,
-              labelString: "Categories",
-              fontColor: "white",
-              fontSize: 15,
-            },
-          },
-        ],
-        yAxes: [
-          {
-            stacked: false,
-            ticks: {
-              fontSize: 12,
-              beginAtZero: true,
-              fontColor: "white",
-              max: 120,
-            },
-            gridLines: {
-              color: "rgba(255, 255, 255, 0.25)",
-            },
-            scaleLabel: {
-              display: true,
-              labelString: "Time(Minutes)",
-              fontColor: "white",
-              fontSize: 15,
-            },
-          },
-        ],
-      },
-      animation: false,
-      elements: {
-        line: {
-          tension: 0,
-        },
-      },
-      title: {
-        display: true,
-        text: "Level Zero",
-        fontSize: 15,
-        fontColor: "white",
-      },
-      legend: {
-        labels: {
-          //   filter: function (item, chart) {
-          //     // Logic to remove a particular legend item goes here
-          //     return item.text == null || !item.text.includes("Current Value");
-          //   },
-          fontColor: "white",
-        },
-      },
-    };
-
-    this.averageBarChartFive = new Chart(ctx, {
-      type: "bar",
-      data: chartData,
-      options: chartOptions,
-    });
-  }
-
-  averageBarChartFiveData(responseData) {
-    let currentLevelZeroValue = responseData[0]["accumulated_level_zero"];
-    let currentLevelZeroAverage = responseData[0]["level_zero_average"];
-
-    // Remove Data
-    this.averageBarChartFive.data.datasets[0].data = [];
-    this.averageBarChartFive.data.datasets[1].data = [];
-    this.averageBarChartFive.data.datasets[0].backgroundColor = [];
-    this.averageBarChartFive.data.datasets[1].backgroundColor = [];
-    this.averageBarChartFive.update();
-    //
-
-    // Update Chart with new data
-    this.averageBarChartFive.data.datasets[0].data.push(currentLevelZeroValue);
-    this.averageBarChartFive.data.datasets[1].data.push(
-      currentLevelZeroAverage
-    );
-    this.averageBarChartFive.data.datasets[0].backgroundColor = "#32A9D9";
-    this.averageBarChartFive.data.datasets[1].backgroundColor =
-      "rgba(46, 78, 100, 1)";
-
-    this.averageBarChartFive.update();
+    this.eventChart.update();
   }
 }
 
