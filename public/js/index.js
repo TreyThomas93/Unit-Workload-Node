@@ -234,6 +234,8 @@ class Master {
 
               let refined = latest.substring(0, latest.indexOf("["));
 
+              refined = refined.split("-")[0]
+
               if (this.screenWidth > 1080) {
                 this.promptNotificationTab(refined);
               }
