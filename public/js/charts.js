@@ -6,6 +6,8 @@ class Charts {
     this.onCallChart;
     this.postTimeChart;
     this.driveTimeChart;
+    this.taskTimeChart;
+    this.postAssignmentsChart;
     this.eventChart;
 
     this.createLiveWorkloadBarChart();
@@ -24,6 +26,18 @@ class Charts {
       "Hour",
       "drive-time",
       "Drive Time"
+    );
+    this.chartGenerator(
+      "#task-time-chart",
+      "Hour",
+      "task-time",
+      "Task Time"
+    );
+    this.chartGenerator(
+      "#post-assignments-chart",
+      "Hour",
+      "post-assignments",
+      "Post Assignments"
     );
 
     this.createEventChart();
@@ -357,6 +371,54 @@ class Charts {
           data: chartData,
           options: chartOptions,
         });
+      } else if (title === "Task Time") {
+        this.taskTimeChart = new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: [],
+            datasets: [
+              {
+                label: "Average",
+                backgroundColor: [],
+                data: [],
+                fill: false,
+                borderColor: "white",
+                pointRadius: 0,
+                borderDash: [15, 10],
+                borderWidth: 2,
+                spanGaps: true,
+              },
+              {
+                label: "Today",
+                backgroundColor: [],
+                data: [],
+                fill: false,
+                borderColor: "blue",
+                pointRadius: 0,
+                borderWidth: 2,
+                spanGaps: true,
+              },
+              {
+                label: "Max Task Time Threshold",
+                fill: false,
+                borderColor: "red",
+                backgroundColor: "red",
+                data: [],
+                radius: 0,
+      
+                // Changes this dataset to become a line
+                type: "line",
+              },
+            ],
+          },
+          options: chartOptions,
+        });
+      } else if (title === "Post Assignments") {
+        this.postAssignmentsChart = new Chart(ctx, {
+          type: "line",
+          data: chartData,
+          options: chartOptions,
+        });
       }
     } catch (err) {
       console.log(err);
@@ -487,6 +549,59 @@ class Charts {
         this.driveTimeChart.data.datasets[1].data.push(average["today"]);
 
         this.driveTimeChart.update();
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  taskTimeChartData(responseData) {
+    try {
+      let maxTaskTime = 70;
+      // Remove Data
+      this.taskTimeChart.data.labels = [];
+      this.taskTimeChart.data.datasets[2].data = [];
+      this.taskTimeChart.data.datasets[1].data = [];
+      this.taskTimeChart.data.datasets[0].data = [];
+      this.taskTimeChart.data.datasets[0].backgroundColor = [];
+      this.taskTimeChart.data.datasets[1].backgroundColor = [];
+      this.taskTimeChart.update();
+
+      let averages = responseData[0]["hourly"]["task_time"];
+
+      averages.forEach((average) => {
+        // Update Chart with new data
+        this.taskTimeChart.data.labels.push(average["time"]);
+        this.taskTimeChart.data.datasets[0].data.push(average["average"]);
+        this.taskTimeChart.data.datasets[1].data.push(average["today"]);
+        this.taskTimeChart.data.datasets[2].data.push(maxTaskTime);
+
+        this.taskTimeChart.update();
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  postAssignmentsChartData(responseData) {
+    try {
+      // Remove Data
+      this.postAssignmentsChart.data.labels = [];
+      this.postAssignmentsChart.data.datasets[1].data = [];
+      this.postAssignmentsChart.data.datasets[0].data = [];
+      this.postAssignmentsChart.data.datasets[0].backgroundColor = [];
+      this.postAssignmentsChart.data.datasets[1].backgroundColor = [];
+      this.postAssignmentsChart.update();
+
+      let averages = responseData[0]["hourly"]["post_assignments"];
+
+      averages.forEach((average) => {
+        // Update Chart with new data
+        this.postAssignmentsChart.data.labels.push(average["time"]);
+        this.postAssignmentsChart.data.datasets[0].data.push(average["average"]);
+        this.postAssignmentsChart.data.datasets[1].data.push(average["today"]);
+
+        this.postAssignmentsChart.update();
       });
     } catch (err) {
       console.log(err);

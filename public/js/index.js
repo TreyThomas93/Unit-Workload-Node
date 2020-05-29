@@ -264,6 +264,8 @@ class Master {
             this.charts.onCallChartData(responseData);
             this.charts.postTimeChartData(responseData);
             this.charts.driveTimeChartData(responseData);
+            this.charts.taskTimeChartData(responseData);
+            this.charts.postAssignmentsChartData(responseData);
             this.charts.eventChartData(responseData);
 
             document.querySelector("#status").style.color = "yellow";
