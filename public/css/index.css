@@ -102,4 +102,56 @@
   grid-gap: 1em;
   padding: 1em;
 }
+
+.workload-table-popup-container {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  background-color: rgba(1, 1, 1, 0.5);
+  top: 0;
+  left: 0;
+  z-index: 4000;
+}
+
+.workload-table-popup-container .workload-table-popup {
+  background-color: #010141;
+  margin: auto;
+  width: 90%;
+  padding: 1em;
+  border-radius: 5px;
+}
+
+.workload-table-popup-container .workload-table-popup table {
+  margin-top: 1em;
+}
+
+.view-button,
+.exit-popup {
+  background-color: #007acc;
+  color: white;
+  border-radius: 3px;
+  border: none;
+  -webkit-box-shadow: 0 0 10px rgba(1, 1, 1, 0.25);
+          box-shadow: 0 0 10px rgba(1, 1, 1, 0.25);
+  padding: 0.25em 0.5em;
+  -webkit-transition: 0.4s ease-out;
+  transition: 0.4s ease-out;
+}
+
+.view-button:hover,
+.exit-popup:hover {
+  opacity: 0.5;
+  -webkit-transform: translateX(1px);
+          transform: translateX(1px);
+}
 /*# sourceMappingURL=index.css.map */

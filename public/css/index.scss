@@ -1,4 +1,3 @@
-
 #workload-bar-chart-container {
   display: none;
 }
@@ -71,7 +70,7 @@
     grid-template-columns: repeat(1, 1fr);
     grid-gap: 1em;
 
-    &>div {
+    & > div {
       display: grid !important;
       height: 500px;
     }
@@ -91,4 +90,45 @@
   display: grid;
   grid-gap: 1em;
   padding: 1em;
+}
+
+.workload-table-popup-container {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  background-color: rgba(1, 1, 1, 0.5);
+  top: 0;
+  left: 0;
+  z-index: 4000;
+
+  .workload-table-popup {
+    background-color: #010141;
+    margin: auto;
+    width: 90%;
+    padding: 1em;
+    border-radius: 5px;
+
+    table {
+      margin-top: 1em;
+    }
+  }
+}
+
+.view-button,
+.exit-popup {
+  background-color: #007acc;
+  color: white;
+  border-radius: 3px;
+  border: none;
+  box-shadow: 0 0 10px rgba(1, 1, 1, 0.25);
+  padding: 0.25em 0.5em;
+  transition: 0.4s ease-out;
+
+  &:hover {
+    opacity: 0.5;
+    transform: translateX(1px);
+  }
 }

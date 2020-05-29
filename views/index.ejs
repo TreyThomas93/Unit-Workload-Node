@@ -1,4 +1,3 @@
-
 <!-- SYSTEM CARDS -->
 <div id="system-cards" class="container">
   <div id="level">
@@ -79,63 +78,47 @@
     <label style="color: lightgreen;">1 Hour (EOS)</label>
     <label style="color: red;">Past EOS</label>
   </div>
-  <!-- ABOVE MAX -->
-  <h5>Above Max ( <span id="total-above-max"></span> Units )</h5>
-  <table id="above-max">
-    <thead>
-      <th>Unit</th>
-      <th>Workload</th>
-      <th>Threshold</th>
-      <th>Ratio</th>
-      <th>Arrivals</th>
-      <th>Task Time</th>
-      <th>Post Time</th>
-      <th>Post Moves</th>
-      <th>Drive Time</th>
-      <th>On Call Time</th>
-      <th>Last Post</th>
-      <th>Status</th>
-    </thead>
-    <tbody id="above-max-tbody"></tbody>
-  </table>
-  <!-- ABOVE CURRENT -->
-  <h5>Above Current ( <span id="total-above-current"></span> Units )</h5>
-  <table id="above-current">
-    <thead>
-      <th>Unit</th>
-      <th>Workload</th>
-      <th>Threshold</th>
-      <th>Ratio</th>
-      <th>Arrivals</th>
-      <th>Task Time</th>
-      <th>Post Time</th>
-      <th>Post Moves</th>
-      <th>Drive Time</th>
-      <th>On Call Time</th>
-      <th>Last Post</th>
-      <th>Status</th>
-    </thead>
-    <tbody id="above-current-tbody"></tbody>
-  </table>
-  <!-- OTHER -->
-  <h5>Other ( <span id="total-other"></span> Units )</h5>
-  <table id="other">
-    <thead>
-      <th>Unit</th>
-      <th>Workload</th>
-      <th>Threshold</th>
-      <th>Ratio</th>
-      <th>Arrivals</th>
-      <th>Task Time</th>
-      <th>Post Time</th>
-      <th>Post Moves</th>
-      <th>Drive Time</th>
-      <th>On Call Time</th>
-      <th>Last Post</th>
-      <th>Status</th>
-    </thead>
-    <tbody id="other-tbody"></tbody>
-  </table>
+  <div id="inner-workload-tables">
+    <div>
+      <!-- ABOVE MAX -->
+      <h5>Above Max ( <span id="total-above-max"></span> Units )</h5>
+      <table id="above-max">
+        <thead>
+          <th>Unit</th>
+          <th>Workload</th>
+          <th>Threshold</th>
+          <th></th>
+        </thead>
+        <tbody id="above-max-tbody"></tbody>
+      </table>
+    </div>
+    <div>
+      <!-- ABOVE CURRENT -->
+      <h5>Above Current ( <span id="total-above-current"></span> Units )</h5>
+      <table id="above-current">
+        <thead>
+          <th>Unit</th>
+          <th>Workload</th>
+          <th>Threshold</th>
+          <th></th>
+        </thead>
+        <tbody id="above-current-tbody"></tbody>
+      </table>
+    </div>
+    <div>
+      <!-- OTHER -->
+      <h5>Other ( <span id="total-other"></span> Units )</h5>
+      <table id="other">
+        <thead>
+          <th>Unit</th>
+          <th>Workload</th>
+          <th>Threshold</th>
+          <th></th>
+        </thead>
+        <tbody id="other-tbody"></tbody>
+      </table>
+    </div>
+  </div>
 </div>
 
 <!-- CREW LIST -->

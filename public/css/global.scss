@@ -96,11 +96,11 @@ h1 {
 }
 
 label {
-  font-size: 0.7rem;
+  font-size: 0.9rem;
 }
 
 h5 {
-  font-size: 0.7rem;
+  font-size: 0.9rem;
 }
 
 .container {
@@ -109,13 +109,17 @@ h5 {
 
 table {
   width: 100%;
-  font-size: 0.4rem;
+  font-size: 0.8rem;
   margin-bottom: 0.5em;
   text-align: center;
   line-height: 1.5;
 
   tr:nth-child(odd) {
     background-color: var(--primary);
+  }
+
+  td {
+    padding: 0.5em 0;
   }
 }
 
@@ -242,5 +246,12 @@ footer {
 
   li {
     font-size: 0.9rem;
+  }
+
+  #inner-workload-tables {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 1em;
+    margin-top: 1em;
   }
 }

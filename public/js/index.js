@@ -33,6 +33,137 @@ document.addEventListener("DOMContentLoaded", (e) => {
     if (name === "load-screen") {
       master.removeLoadWindow();
     }
+
+    if (e.target.className === "view-button") {
+      let row = e.target.parentNode.parentNode;
+
+      let output = "";
+
+      let textArray = [];
+
+      if (row.className === "workload-row") {
+        if (document.querySelector(".workload-table-popup-container")) {
+          master.removePopUp();
+        }
+
+        row.childNodes.forEach((data) => {
+          let text = data.textContent;
+
+          if (text.trim() !== "") {
+            textArray.push(text);
+          }
+        });
+
+        // let windowWidth = screen.width;
+        let windowWidth = window.innerWidth;
+
+        if (windowWidth < 1080) {
+          output = `
+
+            <button class="exit-popup">Exit</button>
+            <table>
+              <tbody>
+                <tr>
+                  <td>Unit</td>
+                  <td>${textArray[0]}</td>
+                </tr>
+                <tr>
+                  <td>Workload</td>
+                  <td>${textArray[1]}</td>
+                </tr>
+                <tr>
+                  <td>Threshold</td>
+                  <td>${textArray[2]}</td>
+                </tr>
+                <tr>
+                  <td>Ratio</td>
+                  <td>${textArray[3]}</td>
+                </tr>
+                <tr>
+                  <td>Arrivals</td>
+                  <td>${textArray[4]}</td>
+                </tr>
+                <tr>
+                  <td>Task Time</td>
+                  <td>${textArray[5]}</td>
+                </tr>
+                <tr>
+                  <td>Post Time</td>
+                  <td>${textArray[6]}</td>
+                </tr>
+                <tr>
+                  <td>Post Assignments</td>
+                  <td>${textArray[7]}</td>
+                </tr>
+                <tr>
+                  <td>Drive Time</td>
+                  <td>${textArray[8]}</td>
+                </tr>
+                <tr>
+                  <td>On Call Time</td>
+                  <td>${textArray[9]}</td>
+                </tr>
+                <tr>
+                  <td>Last Post</td>
+                  <td>${textArray[10]}</td>
+                </tr>
+                <tr>
+                  <td>Status</td>
+                  <td>${textArray[11]}</td>
+                </tr>
+              </tbody>
+            </table>
+          
+          `;
+
+          master.promptPopUp(output);
+        } else {
+          output = `
+
+            <button class="exit-popup">Exit</button>
+            <table>
+              <thead>
+                <th>Unit</th>
+                <th>Workload</th>
+                <th>Threshold</th>
+                <th>Ratio</th>
+                <th>Arrivals</th>
+                <th>Task Time</th>
+                <th>Post Time</th>
+                <th>Post Assignments</th>
+                <th>Drive Time</th>
+                <th>On Call Time</th>
+                <th>Last Post</th>
+                <th>Status</th>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>${textArray[0]}</td>
+                  <td>${textArray[1]}</td>
+                  <td>${textArray[2]}</td>
+                  <td>${textArray[3]}</td>
+                  <td>${textArray[4]}</td>
+                  <td>${textArray[5]}</td>
+                  <td>${textArray[6]}</td>
+                  <td>${textArray[7]}</td>
+                  <td>${textArray[8]}</td>
+                  <td>${textArray[9]}</td>
+                  <td>${textArray[10]}</td>
+                  <td>${textArray[11]}</td>
+                </tr>
+              </tbody>
+            </table>
+          
+          `;
+
+          master.promptPopUp(output);
+        }
+      }
+    }
+
+    if (e.target.className === "exit-popup") {
+      master.removePopUp();
+    }
   });
 });
 
@@ -120,6 +251,24 @@ class Master {
         ).style.width = `${counter}%`;
       }
     }, 1);
+  }
+
+  promptPopUp(content) {
+    let popup = document.createElement("div");
+
+    popup.className = "workload-table-popup-container";
+
+    popup.innerHTML = `
+      <div class="workload-table-popup">
+        ${content}
+      </div>
+    `;
+
+    document.body.appendChild(popup);
+  }
+
+  removePopUp() {
+    document.querySelector(".workload-table-popup-container").remove();
   }
 
   timeDifference(time) {
@@ -234,7 +383,7 @@ class Master {
 
               let refined = latest.substring(0, latest.indexOf("["));
 
-              refined = refined.split("-")[0]
+              refined = refined.split("-")[0];
 
               if (this.screenWidth > 1080) {
                 this.promptNotificationTab(refined);
@@ -407,19 +556,20 @@ class Master {
 
         maxOutput += `
         
-          <tr style='background-color: ${backgroundColor}; color: ${color}'>  
+          <tr class="workload-row" style='background-color: ${backgroundColor}; color: ${color}'>  
             <td>${unit_number}</td>
             <td>${workload}</td>
             <td>${threshold}</td>
-            <td>${ratio}</td>
-            <td>${arrivals}</td>
-            <td>${task_time}</td>
-            <td>${post_time}</td>
-            <td>${post_assignments}</td>
-            <td>${drive_time}</td>
-            <td>${on_call_time}</td>
-            <td>${last_post}</td>
-            <td>${status}</td>
+            <td style="display: none;">${ratio}</td>
+            <td style="display: none;">${arrivals}</td>
+            <td style="display: none;">${task_time}</td>
+            <td style="display: none;">${post_time}</td>
+            <td style="display: none;">${post_assignments}</td>
+            <td style="display: none;">${drive_time}</td>
+            <td style="display: none;">${on_call_time}</td>
+            <td style="display: none;">${last_post}</td>
+            <td style="display: none;">${status}</td>
+            <td><button class="view-button">View</button></td>
           </tr>
         
         `;
@@ -428,19 +578,20 @@ class Master {
 
         currentOutput += `
         
-          <tr style='background-color: ${backgroundColor}; color: ${color}'>  
+          <tr class="workload-row" style='background-color: ${backgroundColor}; color: ${color}'>  
             <td>${unit_number}</td>
             <td>${workload}</td>
             <td>${threshold}</td>
-            <td>${ratio}</td>
-            <td>${arrivals}</td>
-            <td>${task_time}</td>
-            <td>${post_time}</td>
-            <td>${post_assignments}</td>
-            <td>${drive_time}</td>
-            <td>${on_call_time}</td>
-            <td>${last_post}</td>
-            <td>${status}</td>
+            <td style="display: none;">${ratio}</td>
+            <td style="display: none;">${arrivals}</td>
+            <td style="display: none;">${task_time}</td>
+            <td style="display: none;">${post_time}</td>
+            <td style="display: none;">${post_assignments}</td>
+            <td style="display: none;">${drive_time}</td>
+            <td style="display: none;">${on_call_time}</td>
+            <td style="display: none;">${last_post}</td>
+            <td style="display: none;">${status}</td>
+            <td><button class="view-button">View</button></td>
           </tr>
         
         `;
@@ -449,19 +600,20 @@ class Master {
 
         otherOutput += `
         
-          <tr style='background-color: ${backgroundColor}; color: ${color}'>  
+          <tr class="workload-row" style='background-color: ${backgroundColor}; color: ${color}'>  
             <td>${unit_number}</td>
             <td>${workload}</td>
             <td>${threshold}</td>
-            <td>${ratio}</td>
-            <td>${arrivals}</td>
-            <td>${task_time}</td>
-            <td>${post_time}</td>
-            <td>${post_assignments}</td>
-            <td>${drive_time}</td>
-            <td>${on_call_time}</td>
-            <td>${last_post}</td>
-            <td>${status}</td>
+            <td style="display: none;">${ratio}</td>
+            <td style="display: none;">${arrivals}</td>
+            <td style="display: none;">${task_time}</td>
+            <td style="display: none;">${post_time}</td>
+            <td style="display: none;">${post_assignments}</td>
+            <td style="display: none;">${drive_time}</td>
+            <td style="display: none;">${on_call_time}</td>
+            <td style="display: none;">${last_post}</td>
+            <td style="display: none;">${status}</td>
+            <td><button class="view-button">View</button></td>
           </tr>
         
         `;
