@@ -381,7 +381,7 @@ class Master {
       const post_time = this.formatTime(unit.post_time);
       const post_assignments = unit.post_assignments;
       const drive_time = this.formatTime(unit.drive_time);
-      const on_call_time = this.formatTime(unit.on_call_time);
+      const on_call_time = this.formatTime(unit.task_time);
       const last_post = unit.last_post;
       const status = unit.status;
 
