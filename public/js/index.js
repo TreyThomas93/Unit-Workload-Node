@@ -76,48 +76,52 @@ document.addEventListener("DOMContentLoaded", (e) => {
                   <td>${textArray[2]}</td>
                 </tr>
                 <tr>
-                  <td>Crew Member One</td>
+                  <td>S.O.S</td>
                   <td>${textArray[3]}</td>
                 </tr>
                 <tr>
-                  <td>Crew Member Two</td>
+                  <td>Crew Member One</td>
                   <td>${textArray[4]}</td>
                 </tr>
                 <tr>
-                  <td>Ratio</td>
+                  <td>Crew Member Two</td>
                   <td>${textArray[5]}</td>
                 </tr>
                 <tr>
-                  <td>Arrivals</td>
+                  <td>Ratio</td>
                   <td>${textArray[6]}</td>
                 </tr>
                 <tr>
-                  <td>Task Time</td>
+                  <td>Arrivals</td>
                   <td>${textArray[7]}</td>
                 </tr>
                 <tr>
-                  <td>Post Time</td>
+                  <td>Task Time</td>
                   <td>${textArray[8]}</td>
                 </tr>
                 <tr>
-                  <td>Post Assignments</td>
+                  <td>Post Time</td>
                   <td>${textArray[9]}</td>
                 </tr>
                 <tr>
-                  <td>Drive Time</td>
+                  <td>Post Assignments</td>
                   <td>${textArray[10]}</td>
                 </tr>
                 <tr>
-                  <td>On Call Time</td>
+                  <td>Drive Time</td>
                   <td>${textArray[11]}</td>
                 </tr>
                 <tr>
-                  <td>Last Post</td>
+                  <td>On Call Time</td>
                   <td>${textArray[12]}</td>
                 </tr>
                 <tr>
-                  <td>Status</td>
+                  <td>Last Post</td>
                   <td>${textArray[13]}</td>
+                </tr>
+                <tr>
+                  <td>Status</td>
+                  <td>${textArray[14]}</td>
                 </tr>
               </tbody>
             </table>
@@ -134,6 +138,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
                 <th>Unit</th>
                 <th>Workload</th>
                 <th>Threshold</th>
+                <th>S.O.S</th>
                 <th>Crew Member One</th>
                 <th>Crew Member Two</th>
                 <th>Ratio</th>
@@ -162,6 +167,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
                   <td>${textArray[11]}</td>
                   <td>${textArray[12]}</td>
                   <td>${textArray[13]}</td>
+                  <td>${textArray[14]}</td>
                 </tr>
               </tbody>
             </table>
@@ -531,6 +537,7 @@ class Master {
     let total_other = 0;
 
     data.forEach((unit) => {
+      const sos = unit.sos;
       const unit_number = unit.unit;
       const workload = unit.workload;
       const threshold = unit.threshold;
@@ -574,6 +581,7 @@ class Master {
             <td>${unit_number}</td>
             <td>${workload}</td>
             <td>${threshold}</td>
+            <td style="display: none;">${sos}</td>
             <td style="display: none;">${crew_member_one}</td>
             <td style="display: none;">${crew_member_two}</td>
             <td style="display: none;">${ratio}</td>
@@ -598,6 +606,7 @@ class Master {
             <td>${unit_number}</td>
             <td>${workload}</td>
             <td>${threshold}</td>
+            <td style="display: none;">${sos}</td>
             <td style="display: none;">${crew_member_one}</td>
             <td style="display: none;">${crew_member_two}</td>
             <td style="display: none;">${ratio}</td>
@@ -622,6 +631,7 @@ class Master {
             <td>${unit_number}</td>
             <td>${workload}</td>
             <td>${threshold}</td>
+            <td style="display: none;">${sos}</td>
             <td style="display: none;">${crew_member_one}</td>
             <td style="display: none;">${crew_member_two}</td>
             <td style="display: none;">${ratio}</td>
