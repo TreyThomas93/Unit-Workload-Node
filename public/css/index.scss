@@ -37,6 +37,10 @@
       color: black;
     }
   }
+
+  &>div>div {
+    padding: 1em;
+  }
 }
 
 #system-report {
@@ -59,7 +63,8 @@
   }
 
   ul {
-    border: solid 1px white;
+    // border: ridge 1px white;
+    border-radius: 5px;
     max-height: 500px;
     padding: 1em 2em;
     overflow-x: auto;

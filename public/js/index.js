@@ -76,40 +76,48 @@ document.addEventListener("DOMContentLoaded", (e) => {
                   <td>${textArray[2]}</td>
                 </tr>
                 <tr>
-                  <td>Ratio</td>
+                  <td>Crew Member One</td>
                   <td>${textArray[3]}</td>
                 </tr>
                 <tr>
-                  <td>Arrivals</td>
+                  <td>Crew Member Two</td>
                   <td>${textArray[4]}</td>
                 </tr>
                 <tr>
-                  <td>Task Time</td>
+                  <td>Ratio</td>
                   <td>${textArray[5]}</td>
                 </tr>
                 <tr>
-                  <td>Post Time</td>
+                  <td>Arrivals</td>
                   <td>${textArray[6]}</td>
                 </tr>
                 <tr>
-                  <td>Post Assignments</td>
+                  <td>Task Time</td>
                   <td>${textArray[7]}</td>
                 </tr>
                 <tr>
-                  <td>Drive Time</td>
+                  <td>Post Time</td>
                   <td>${textArray[8]}</td>
                 </tr>
                 <tr>
-                  <td>On Call Time</td>
+                  <td>Post Assignments</td>
                   <td>${textArray[9]}</td>
                 </tr>
                 <tr>
-                  <td>Last Post</td>
+                  <td>Drive Time</td>
                   <td>${textArray[10]}</td>
                 </tr>
                 <tr>
-                  <td>Status</td>
+                  <td>On Call Time</td>
                   <td>${textArray[11]}</td>
+                </tr>
+                <tr>
+                  <td>Last Post</td>
+                  <td>${textArray[12]}</td>
+                </tr>
+                <tr>
+                  <td>Status</td>
+                  <td>${textArray[13]}</td>
                 </tr>
               </tbody>
             </table>
@@ -126,6 +134,8 @@ document.addEventListener("DOMContentLoaded", (e) => {
                 <th>Unit</th>
                 <th>Workload</th>
                 <th>Threshold</th>
+                <th>Crew Member One</th>
+                <th>Crew Member Two</th>
                 <th>Ratio</th>
                 <th>Arrivals</th>
                 <th>Task Time</th>
@@ -150,6 +160,8 @@ document.addEventListener("DOMContentLoaded", (e) => {
                   <td>${textArray[9]}</td>
                   <td>${textArray[10]}</td>
                   <td>${textArray[11]}</td>
+                  <td>${textArray[12]}</td>
+                  <td>${textArray[13]}</td>
                 </tr>
               </tbody>
             </table>
@@ -523,6 +535,8 @@ class Master {
       const workload = unit.workload;
       const threshold = unit.threshold;
       const arrivals = unit.arrivals;
+      const crew_member_one = unit.crew_member_one;
+      const crew_member_two = unit.crew_member_two;
       let task_time;
       if (arrivals !== 0) {
         task_time = (unit.task_time / arrivals).toFixed();
@@ -560,6 +574,8 @@ class Master {
             <td>${unit_number}</td>
             <td>${workload}</td>
             <td>${threshold}</td>
+            <td style="display: none;">${crew_member_one}</td>
+            <td style="display: none;">${crew_member_two}</td>
             <td style="display: none;">${ratio}</td>
             <td style="display: none;">${arrivals}</td>
             <td style="display: none;">${task_time}</td>
@@ -582,6 +598,8 @@ class Master {
             <td>${unit_number}</td>
             <td>${workload}</td>
             <td>${threshold}</td>
+            <td style="display: none;">${crew_member_one}</td>
+            <td style="display: none;">${crew_member_two}</td>
             <td style="display: none;">${ratio}</td>
             <td style="display: none;">${arrivals}</td>
             <td style="display: none;">${task_time}</td>
@@ -604,6 +622,8 @@ class Master {
             <td>${unit_number}</td>
             <td>${workload}</td>
             <td>${threshold}</td>
+            <td style="display: none;">${crew_member_one}</td>
+            <td style="display: none;">${crew_member_two}</td>
             <td style="display: none;">${ratio}</td>
             <td style="display: none;">${arrivals}</td>
             <td style="display: none;">${task_time}</td>

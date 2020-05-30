@@ -27,12 +27,7 @@ class Charts {
       "drive-time",
       "Drive Time"
     );
-    this.chartGenerator(
-      "#task-time-chart",
-      "Hour",
-      "task-time",
-      "Task Time"
-    );
+    this.chartGenerator("#task-time-chart", "Hour", "task-time", "Task Time");
     this.chartGenerator(
       "#post-assignments-chart",
       "Hour",
@@ -256,7 +251,7 @@ class Charts {
             data: [],
             fill: false,
             borderColor: "white",
-            pointRadius: 0,
+            pointRadius: 1,
             borderDash: [15, 10],
             borderWidth: 2,
             spanGaps: true,
@@ -267,7 +262,7 @@ class Charts {
             data: [],
             fill: false,
             borderColor: "blue",
-            pointRadius: 0,
+            pointRadius: 1,
             borderWidth: 2,
             spanGaps: true,
           },
@@ -339,6 +334,43 @@ class Charts {
             fontColor: "white",
           },
         },
+        tooltips: {
+          callbacks: {
+            label: function (tooltipItem, data) {
+              let currentLabel = data.datasets[tooltipItem.datasetIndex].label;
+              let currentValue = tooltipItem.yLabel;
+
+              let average = data.datasets[0].data;
+              let today = data.datasets[1].data;
+
+              let index = tooltipItem.index;
+
+              if (currentLabel === "Average") {
+                let todayValue = today[index];
+                let difference = Math.abs(currentValue - todayValue);
+
+                let display = [
+                  `Average: ${currentValue}`,
+                  `Today: ${todayValue}`,
+                  `Difference: ${difference}`,
+                ];
+
+                return display;
+              } else if (currentLabel === "Today") {
+                let averageValue = average[index];
+                let difference = Math.abs(currentValue - averageValue);
+
+                let display = [
+                  `Average: ${averageValue}`,
+                  `Today: ${currentValue}`,
+                  `Difference: ${difference}`,
+                ];
+
+                return display;
+              }
+            },
+          },
+        },
       };
 
       if (title === "Units") {
@@ -383,7 +415,7 @@ class Charts {
                 data: [],
                 fill: false,
                 borderColor: "white",
-                pointRadius: 0,
+                pointRadius: 1,
                 borderDash: [15, 10],
                 borderWidth: 2,
                 spanGaps: true,
@@ -394,7 +426,7 @@ class Charts {
                 data: [],
                 fill: false,
                 borderColor: "blue",
-                pointRadius: 0,
+                pointRadius: 1,
                 borderWidth: 2,
                 spanGaps: true,
               },
@@ -404,8 +436,8 @@ class Charts {
                 borderColor: "red",
                 backgroundColor: "red",
                 data: [],
-                radius: 0,
-      
+                pointRadius: 0,
+
                 // Changes this dataset to become a line
                 type: "line",
               },
@@ -598,7 +630,9 @@ class Charts {
       averages.forEach((average) => {
         // Update Chart with new data
         this.postAssignmentsChart.data.labels.push(average["time"]);
-        this.postAssignmentsChart.data.datasets[0].data.push(average["average"]);
+        this.postAssignmentsChart.data.datasets[0].data.push(
+          average["average"]
+        );
         this.postAssignmentsChart.data.datasets[1].data.push(average["today"]);
 
         this.postAssignmentsChart.update();
@@ -623,10 +657,6 @@ class Charts {
         {
           label: "Level Zero",
           backgroundColor: "orange",
-        },
-        {
-          label: "Above Current Threshold",
-          backgroundColor: "yellow",
         },
         {
           label: "Above Max Threshold",
@@ -726,7 +756,19 @@ class Charts {
         mode: "single",
         callbacks: {
           label: function (tooltipItem, data) {
-            let label = data.datasets[0].label[tooltipItem.index - 1];
+            let label;
+            let color =
+              data.datasets[0].pointBackgroundColor[tooltipItem.index];
+
+            if (color === "red") {
+              label = "Above Max Threshold";
+            } else if (color === "orange") {
+              label = "System is Level Zero";
+            } else if (color === "blue") {
+              label = "Late Call";
+            } else if (color === "green") {
+              label = "Past EOS";
+            }
             return label;
           },
         },
@@ -767,9 +809,7 @@ class Charts {
           text = sep[2] + " " + sep[3];
         }
 
-        if (text === "Above Current Threshold") {
-          color = "yellow";
-        } else if (text === "Above Max Threshold") {
+        if (text === "Above Max Threshold") {
           color = "red";
         } else if (text === "Received Late Call") {
           color = "blue";
