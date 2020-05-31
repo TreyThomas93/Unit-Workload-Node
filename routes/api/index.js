@@ -1,16 +1,16 @@
 const express = require("express");
 const router = express.Router();
-const { ensureAuthenticated } = require("../config/auth");
-const liveWorkloadDatabase = require("../models/liveWorkload");
-const systemReportDatabase = require("../models/systemReport");
-const usersDatabase = require("../models/users");
+const { ensureAuthenticated } = require("../../config/auth");
+const liveWorkloadDatabase = require("../../models/liveWorkload");
+const systemReportDatabase = require("../../models/systemReport");
+const usersDatabase = require("../../models/users");
 
 require("dotenv").config();
 
 // @route GET /
 // @desc Renders index page
-router.get("/", ensureAuthenticated, (req, res) => {
-  res.render("index");
+router.get("/", (req, res) => {
+  res.send("AUTH");
 });
 
 // @route GET /live_workload

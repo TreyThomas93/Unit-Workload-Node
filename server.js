@@ -1,5 +1,5 @@
 const express = require("express");
-const expressLayouts = require("express-ejs-layouts");
+// const expressLayouts = require("express-ejs-layouts");
 const flash = require("connect-flash");
 const session = require("express-session");
 const mongoose = require("mongoose");
@@ -7,8 +7,11 @@ const passport = require("passport");
 const bodyParser = require("body-parser");
 const sslRedirect = require("heroku-ssl-redirect");
 const methodOverride = require("method-override");
+var cors = require("cors");
 
 const app = express();
+
+app.use(cors);
 
 require("dotenv").config();
 
@@ -24,10 +27,10 @@ console.log("Mongo Connected!");
 mongoose.set("useFindAndModify", false);
 
 // EJS Middleware
-app.use(expressLayouts);
-app.set("view engine", "ejs");
+// app.use(expressLayouts);
+// app.set("view engine", "ejs");
 
-app.use(express.static(__dirname + "/public"));
+// app.use(express.static(__dirname + "/public"));
 
 // Bodyparser
 app.use(bodyParser.json());
@@ -36,7 +39,7 @@ app.use(express.urlencoded({ extended: false }));
 // PUT/DELETE
 app.use(methodOverride("_method"));
 
-let time = 2592000000 // 30 Days
+let time = 2592000000; // 30 Days
 // Express Session
 app.use(
   session({
@@ -66,13 +69,10 @@ app.use(sslRedirect());
 
 // Routes
 // index
-app.use("/", require("./routes/index"));
+app.use("/", require("./routes/api/index"));
 
 // login
-app.use("/login", require("./routes/login"));
-
-// admin
-app.use("/admin", require("./routes/admin"));
+app.use("/login", require("./routes/api/login"));
 
 const PORT = process.env.PORT || 5000;
 
