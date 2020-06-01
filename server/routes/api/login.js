@@ -7,8 +7,8 @@ const usersDatabase = require("../../models/users");
 require("dotenv").config();
 
 router.get("/", (req, res) => {
-  res.send("WORKS")
-})
+  res.send("WORKS");
+});
 
 // @route POST /login
 // @desc Logs in user
@@ -19,7 +19,7 @@ router.post("/", (req, res, next) => {
       return next(err);
     }
     if (!user) {
-      return res.send("NOT VALID");
+      return res.status(400).send("NOT VALID");
     }
     req.login(user, (err) => {
       if (err) {

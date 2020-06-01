@@ -9,7 +9,7 @@ require("dotenv").config();
 
 // @route GET /
 // @desc Renders index page
-router.get("/", (req, res) => {
+router.get("/", ensureAuthenticated, (req, res) => {
   res.send("AUTH");
 });
 
