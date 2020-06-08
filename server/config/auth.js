@@ -1,9 +1,19 @@
-module.exports = {
-  ensureAuthenticated: function (req, res, next) {
-    if (req.isAuthenticated()) {
-      return next();
-    }
 
-    res.status(401).send("NOT AUTHENTICATED");
+module.exports = {
+  verifyToken: (req, res, next) => {
+    const bearerHeader = req.headers["authorization"];
+
+    if (typeof bearerHeader !== "undefined") {
+      const token = bearerHeader.split(" ")[1];
+
+      req.token = token;
+
+      console.log(token);
+
+      next();
+    } else {
+      // Forbidden
+      res.status(403);
+    }
   },
 };
