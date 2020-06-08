@@ -5,13 +5,17 @@ const utils = require("../../lib/utils");
 
 require("dotenv").config();
 
-router.post("/login", (req, res) => {
-  utils
-    .verifyUserCredentials(req.body)
-    .then((payload) => {
-      res.status(200).json({ success: true });
-    })
-    .catch((err) => console.log(err));
+router.post("/login", async (req, res) => {
+  // Check if credentials are valid
+  const response = await utils.verifyUserCredentials(req.body);
+
+  // if error, return
+  if (response.error) return res.status(400).json(response.error);
+
+  // Assign token to user
+  const token = await utils.assignToken(response._id);
+
+  return res.header("auth_token", token).status(200).json({ success: true, token });
 });
 
 router.get("/logout", (req, res) => {

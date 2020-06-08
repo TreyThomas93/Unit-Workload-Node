@@ -1,13 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const { verifyToken } = require("../../config/auth");
+const { verifyToken } = require("../../lib/utils");
 const liveWorkloadDatabase = require("../../models/liveWorkload");
 
 require("dotenv").config();
 
 // @route GET /live_workload
 // @desc Fetches Live Workload Data from MongoDB
-router.get("/live_workload", (req, res) => {
+router.post("/live_workload", verifyToken, (req, res) => {
   liveWorkloadDatabase.find({}, (err, data) => {
     if (err) throw err;
 
