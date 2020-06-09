@@ -15,7 +15,16 @@ router.post("/login", async (req, res) => {
   // Assign token to user
   const token = await utils.assignToken(response._id);
 
-  return res.header("auth_token", token).status(200).json({ success: true, token });
+  const user = {
+    _id: response._id,
+    name: response.name,
+    username: response.username,
+  };
+
+  return res
+    .header("auth_token", token)
+    .status(200)
+    .json({ success: true, token, user });
 });
 
 router.get("/logout", (req, res) => {
