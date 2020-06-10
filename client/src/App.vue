@@ -13,7 +13,7 @@ export default {
   name: "App",
   components: {
     Header,
-    Footer,
+    Footer
   },
   methods: {
     watchStyleChange() {
@@ -30,11 +30,12 @@ export default {
           body.style.color = "white";
         }
       });
-    },
+    }
   },
   created() {
     this.watchStyleChange();
-  },
+    screen.orientation.lock("landscape");
+  }
 };
 </script>
 
@@ -49,6 +50,18 @@ body {
   font-family: sans-serif;
   background: #f7f7f7;
   overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 15px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: white;
 }
 
 #app {
