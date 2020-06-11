@@ -25,5 +25,5 @@ Process: Runs a python script -> (https://github.com/TreyThomas93/EMSA-Unit-Work
 ## Give It A Try
 Below is a username and password that you can use to view the web application: <br />
 
-Username: admin1234
+Username: admin1234<br />
 password: password!
