@@ -34,12 +34,12 @@ export default {
   },
   created() {
     this.watchStyleChange();
-    screen.orientation.lock("landscape");
+    // screen.orientation.lock("landscape");
   }
 };
 </script>
 
-<style>
+<style lang="scss">
 * {
   padding: 0;
   margin: 0;
@@ -80,5 +80,49 @@ button {
 
 .shadow {
   box-shadow: 0 0 10px rgba(1, 1, 1, 0.5);
+}
+
+/**
+          TABLES
+ */
+
+.table-container {
+  padding: 1em;
+}
+
+table {
+  width: 100%;
+  text-align: center;
+  margin: 1em 0;
+  font-size: 0.5rem;
+
+  td {
+    padding: 0.5em 0;
+  }
+
+  tr:nth-child(even) {
+    background: rgb(26, 69, 80);
+    color: white;
+  }
+}
+
+.night-table {
+  th,
+  td {
+    border-bottom: solid 1px white;
+  }
+}
+
+.day-table {
+  th,
+  td {
+    border-bottom: solid 1px var(--primary);
+  }
+}
+
+@media (min-width: 1080px) {
+  table {
+    font-size: 0.6rem;
+  }
 }
 </style>
