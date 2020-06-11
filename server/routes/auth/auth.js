@@ -21,6 +21,9 @@ router.post("/login", async (req, res) => {
     username: response.username,
   };
 
+  // Log login datetime
+  utils.logLoginDateTime(response);
+
   return res
     .header("auth_token", token)
     .status(200)
