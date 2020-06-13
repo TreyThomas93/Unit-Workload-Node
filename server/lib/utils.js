@@ -5,6 +5,18 @@ const moment = require("moment");
 
 require("dotenv").config();
 
+function encryptPassword(password) {
+  const saltRounds = 10;
+  return new Promise((resolve, reject) => {
+    bcrypt.genSalt(saltRounds, function (err, salt) {
+      bcrypt.hash(password, salt, function (err, hash) {
+        // Store hash in your password DB.
+        resolve(hash);
+      });
+    });
+  });
+}
+
 function verifyUserCredentials(user) {
   const { username, password } = user;
   const error = "Invalid Username and/or Password";
@@ -63,3 +75,4 @@ module.exports.verifyUserCredentials = verifyUserCredentials;
 module.exports.assignToken = assignToken;
 module.exports.verifyToken = verifyToken;
 module.exports.logLoginDateTime = logLoginDateTime;
+module.exports.encryptPassword = encryptPassword;

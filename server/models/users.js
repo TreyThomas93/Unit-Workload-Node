@@ -6,6 +6,10 @@ const usersSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    admin: {
+      type: Boolean,
+      required: true,
+    },
     username: {
       type: String,
       required: true,

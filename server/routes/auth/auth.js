@@ -15,10 +15,13 @@ router.post("/login", async (req, res) => {
   // Assign token to user
   const token = await utils.assignToken(response._id);
 
+  console.log(response.admin)
+
   const user = {
     _id: response._id,
     name: response.name,
     username: response.username,
+    isAdmin: response.admin
   };
 
   // Log login datetime

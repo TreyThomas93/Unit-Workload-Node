@@ -2,7 +2,8 @@ const express = require("express");
 const router = express.Router();
 const { verifyToken } = require("../../lib/utils");
 const liveWorkloadDatabase = require("../../models/liveWorkload");
-const systemReportDatabase = require("../../models/system")
+const systemReportDatabase = require("../../models/system");
+const userDatabase = require("../../models/users");
 
 require("dotenv").config();
 
@@ -31,6 +32,5 @@ router.post("/system", verifyToken, (req, res) => {
     res.send(JSON.stringify(data));
   });
 });
-
 
 module.exports = router;

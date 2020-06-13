@@ -39,7 +39,11 @@ app.use(sslRedirect());
 /**
  *          API
  */
-app.use("/api", require("./routes/api/workload"));
+// ADMIN
+app.use("/api/admin", require("./routes/api/admin"));
+
+// DASHBOARD
+app.use("/api/workload", require("./routes/api/workload"));
 ////////////////////////////////////////////////////////////////////////
 
 /**
