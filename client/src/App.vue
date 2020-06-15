@@ -76,6 +76,7 @@ button {
 
 :root {
   --primary: #222d33;
+  --secondary: #2D3D53;
 }
 
 .shadow {
