@@ -1,4 +1,4 @@
-# EMSA-Unit-Workload
+# EMSA-Unit-Workload ***RETIRED***
 Displays real time unit(ambulance) workload data for EMSA (Emergency Medical Services Authority) Eastern Division (Tulsa, OK).
 
 ## Description
@@ -21,11 +21,3 @@ Process: Runs a python script -> (https://github.com/TreyThomas93/EMSA-Unit-Work
 &nbsp;&nbsp;&nbsp;2. Extracts csv data and formats accordingly.<br />
 &nbsp;&nbsp;&nbsp;3. Runs data through a series of classes, achieving Live Workload Data, Historic Workload Data, System Data, and Notifications and Logs.<br />
 &nbsp;&nbsp;&nbsp;4. Saves all data to MongoDB Database to be used by web application.<br />
-
-## Give It A Try
-Below is a username and password that you can use to view the web application: <br />
-
-Username: admin1234<br />
-password: password!<br />
-
-https://www.emsa-unitworkload.net/
