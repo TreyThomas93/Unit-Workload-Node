@@ -1,5 +1,5 @@
-# EMSA-Unit-Workload ***RETIRED***
-Displays real time unit(ambulance) workload data for EMSA (Emergency Medical Services Authority) Eastern Division (Tulsa, OK).
+# Unit-Workload
+Displays real time unit(ambulance) workload data. (Currently Fake Data)
 
 ## Description
 This web application collects and displays individual workload data for each unit. <br /><br />
@@ -12,15 +12,9 @@ SERVER SIDE: Node, Express, Mongoose(MongoDB), JWT Web Token<br />
 CLIENT SIDE: VueJS, Vuex, Vue-Router<br />
 
 ## How It Works
-The initial process is that of the data source **undisclosed**.
-
 Entity: Headless Raspberry Pi 4<br />
 Process: Runs a python script -> (https://github.com/TreyThomas93/EMSA-Unit-Workload-No-Flask).<br />
-&nbsp;&nbsp;-> Job: <br />
-&nbsp;&nbsp;&nbsp;1. Listens for csv file.<br />
-&nbsp;&nbsp;&nbsp;2. Extracts csv data and formats accordingly.<br />
-&nbsp;&nbsp;&nbsp;3. Runs data through a series of classes, achieving Live Workload Data, Historic Workload Data, System Data, and Notifications and Logs.<br />
-&nbsp;&nbsp;&nbsp;4. Saves all data to MongoDB Database to be used by web application.<br />
+Currently uses dummy data to mimick true application flow and dynamics.
 
 ## Give It A Try
 
@@ -28,3 +22,5 @@ Username: admin1234<br />
 Password: password!<br />
 
 https://www.unitworkload.net/
+
+# **This program has been used in real life for an undisclosed agency with excellent results.**
