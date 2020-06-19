@@ -7,7 +7,7 @@ Branches ( V1-V8 ):<br />
 SERVER SIDE: Node, Express, Express EJS, Mongoose(MongoDB), PassportJS(Local Strategy)<br />
 CLIENT SIDE: HTML5, SCSS, Vanilla Javascript<br />
 
-Branches ( Vue1-Vue2 ):<br />
+Branches ( Vue1,Vue2,Vue3 ):<br />
 SERVER SIDE: Node, Express, Mongoose(MongoDB), JWT Web Token<br />
 CLIENT SIDE: VueJS, Vuex, Vue-Router<br />
 
