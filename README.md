@@ -13,7 +13,7 @@ CLIENT SIDE: VueJS, Vuex, Vue-Router<br />
 
 ## How It Works
 Entity: Headless Raspberry Pi 4<br />
-Process: Runs a python script -> (https://github.com/TreyThomas93/EMSA-Unit-Workload-No-Flask).<br />
+Process: Runs a python script -> (https://github.com/TreyThomas93/Unit-Workload-Python).<br />
 Currently uses dummy data to mimick true application flow and dynamics.
 
 ## Give It A Try
