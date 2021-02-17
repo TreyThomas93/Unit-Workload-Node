@@ -18,6 +18,8 @@ Currently uses dummy data to mimick true application flow and dynamics.
 
 ## Give It A Try
 
+# DECOMMISSIONED
+
 Username: admin1234<br />
 Password: password!<br />
 
